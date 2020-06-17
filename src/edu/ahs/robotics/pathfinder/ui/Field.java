@@ -1,4 +1,4 @@
-package edu.ahs.robotics.pathfinder;
+package edu.ahs.robotics.pathfinder.ui;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

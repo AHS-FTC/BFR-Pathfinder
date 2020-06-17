@@ -74,6 +74,14 @@ public class Coordinate { //todo consider removing heading and creating an encap
         return pixelY;
     }
 
+    public double getHeading(){
+        return heading;
+    }
+
+    public void setHeading(double heading){
+        this.heading = heading;
+    }
+
     /**
      * Finds inch coordinates given pixel coordinates
      */
@@ -113,6 +121,20 @@ public class Coordinate { //todo consider removing heading and creating an encap
         pixelX = xPixelsFromInchOrigin + xOriginOffset;
         pixelY = yPixelsFromInchOrigin + yOriginOffset;
     }
+
+    /**
+     * Finds the angle from this coordinate to another.
+     * @return The angle in radians (standard conventions).
+     */
+    public double angleTo(Coordinate coord){
+
+        //use inches here to avoid axis ambiguity and such other bugs
+        double dx = coord.getInchX() - getInchX();
+        double dy = coord.getInchY() - getInchY();
+
+        return Math.atan2(dy,dx);
+    }
+
 
     /**
      * Initializes the coordinate system with knowledge of field size.

@@ -1,4 +1,4 @@
-package edu.ahs.robotics.pathfinder;
+package edu.ahs.robotics.pathfinder.ui;
 
 import edu.ahs.robotics.pathfinder.util.Coordinate;
 import javafx.application.Application;
@@ -58,11 +58,10 @@ public class Main extends Application {
 
     private void onMouseClick(MouseEvent e){
         if(e.getButton() == MouseButton.PRIMARY){
-            robot.setPosition(e.getX(),e.getY());
+            robot.setPosition(Coordinate.newFromPixels(e.getX(),e.getY(),0));
         } else if (e.getButton() == MouseButton.SECONDARY){
-            robot.pointTowards(e.getX(),e.getY());
+            robot.pointTowards(Coordinate.newFromPixels(e.getX(), e.getY(),0));
         }
-
     }
 
     public static void main(String[] args) {
