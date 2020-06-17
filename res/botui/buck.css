@@ -1,3 +1,22 @@
 .root{
-       -fx-background-color: #383838;
+    -fx-background-color: #313335;
+}
+.title-text {
+    -fx-fill: #228B22;
+    -fx-font-size: 30px;
+}
+.separator .line {
+    -fx-border-color: #228B22;
+    -fx-border-width: 1;
+}
+.button {
+    -fx-background-radius: 0;
+    -fx-background-color: #43b92b;
+    -fx-border-color: #228B22;
+    -fx-border-radius: 2;
+
+}
+
+@font-face {
+
 }

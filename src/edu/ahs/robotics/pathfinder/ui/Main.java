@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Font;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -23,6 +24,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+
         window = primaryStage;
         layout = new BorderPane();
         windowSize = Screen.getPrimary().getBounds().getMaxY() - 30; //offset gives room for window topbar
@@ -36,11 +38,12 @@ public class Main extends Application {
         layout.getChildren().add(robot.getImageView());
 
         scene = new Scene(layout,windowSize,windowSize);
-        scene.getStylesheets().add("botui/buck.css");
         window.setScene(scene);
         window.setTitle("Black Forest Robotics Pathfinder");
 
         scene.addEventFilter(MouseEvent.MOUSE_CLICKED, this::onMouseClick);
+
+        new Sidebar(windowSize);
 
         window.show();
         lockWindow();
