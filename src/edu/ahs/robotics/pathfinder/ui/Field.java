@@ -7,7 +7,7 @@ import javafx.scene.image.ImageView;
 public class Field {
 
     public enum Mode{
-        EMPTY(""), //todo render empty field in Solidworks
+        EMPTY("/botui/emptyfield.png"), //todo make field render straight
         SKYSTONE("/botui/ssfieldsimple_cropped.PNG");
 
         String fileLoc;
@@ -18,13 +18,13 @@ public class Field {
 
     private static double scaleFactor; //the ratio of pixels to inches
 
-    private Mode mode = Mode.SKYSTONE;
+    private static final Mode MODE = Mode.SKYSTONE;
 
     private ImageView fieldView;
 
     public Field(double fieldSize) {
 
-        Image field = new Image(this.getClass().getResourceAsStream(mode.fileLoc));
+        Image field = new Image(this.getClass().getResourceAsStream(MODE.fileLoc));
         fieldView = new javafx.scene.image.ImageView(field);
         fieldView.setPreserveRatio(true);
         fieldView.setFitWidth(fieldSize);
