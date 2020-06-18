@@ -1,6 +1,11 @@
 .root{
     -fx-background-color: #313335;
+    -fx-font-family: "Verdana";
 }
+.standard-text {
+    -fx-fill: #FFFFFF;
+}
+
 .title-text {
     -fx-fill: #228B22;
     -fx-font-size: 30px;
@@ -13,8 +18,8 @@
     -fx-background-radius: 0;
     -fx-background-color: #43b92b;
     -fx-border-color: #228B22;
-    -fx-border-radius: 2;
-
+    -fx-border-radius: 0;
+    -fx-border-width: 2;
 }
 
 @font-face {

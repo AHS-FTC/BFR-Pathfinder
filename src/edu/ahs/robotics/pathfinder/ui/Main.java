@@ -43,7 +43,7 @@ public class Main extends Application {
 
         scene.addEventFilter(MouseEvent.MOUSE_CLICKED, this::onMouseClick);
 
-        new Sidebar(windowSize);
+        new Sidebar(windowSize, robot);
 
         window.show();
         lockWindow();

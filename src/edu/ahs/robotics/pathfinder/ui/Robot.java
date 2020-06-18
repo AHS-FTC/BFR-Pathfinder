@@ -39,7 +39,7 @@ public class Robot {
         robotView.setY(position.getPixelY() - centerOffset);
     }
 
-    public void setRotation(double angle){
+    public void setRotation(double angle){ //todo make gud
         position.setHeading(angle);
         robotView.setRotate(angle);
     }

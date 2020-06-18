@@ -1,10 +1,10 @@
 package edu.ahs.robotics.pathfinder.ui;
 
 import javafx.geometry.Orientation;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Separator;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -20,16 +20,20 @@ public class Sidebar {
     private Scene scene;
     private VBox verticalLayout;
 
-    public Sidebar(double fieldWindowSize) {
+    private Robot robot;
+
+    public Sidebar(double fieldWindowSize, Robot robot) {
         window = new Stage();
         window.setTitle("BFR Pathfinder UI");
 
-        verticalLayout = new VBox();
+        this.robot = robot;
 
+        verticalLayout = new VBox(10);
+        verticalLayout.setAlignment(Pos.TOP_CENTER);
 
         verticalLayout.getChildren().add(makeTitle());
         verticalLayout.getChildren().add(new Separator(Orientation.HORIZONTAL));
-        verticalLayout.getChildren().add(new Button("useless button"));
+        verticalLayout.getChildren().add(makeSetPositionButton());
 
         scene = new Scene(verticalLayout,300, fieldWindowSize);
         scene.getStylesheets().add("botui/buck.css");
@@ -44,5 +48,11 @@ public class Sidebar {
         t.getStyleClass().add("title-text");
         t.setFont(Font.loadFont(getClass().getResource("/botui/NOOA-Demi-Serif.ttf").toExternalForm(), 10));
         return t;
+    }
+
+    private Button makeSetPositionButton(){
+        Button b = new Button("Set Robot Position");
+        b.setOnAction(e -> new SetPositionWindow(robot));
+        return b;
     }
 }
