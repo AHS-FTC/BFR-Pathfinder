@@ -52,6 +52,7 @@ public class Sidebar {
 
     private Button makeSetPositionButton(){
         Button b = new Button("Set Robot Position");
+        b.setPrefWidth(200);
         b.setOnAction(e -> new SetPositionWindow(robot));
         return b;
     }

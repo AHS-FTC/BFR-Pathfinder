@@ -39,16 +39,23 @@ public class Robot {
         robotView.setY(position.getPixelY() - centerOffset);
     }
 
+    /**
+     * Updates the graphical rotation of the robot after the heading changes.
+     */
+    private void updateRotation(){
+        //negative accounts for the JavaFX img rotation going clockwise on positive for some dumb reason
+        robotView.setRotate(-Math.toDegrees(position.getHeading()) + ROTATION_OFFSET);
+    }
+
     public void setRotation(double angle){ //todo make gud
         position.setHeading(angle);
-        robotView.setRotate(angle);
+        updateRotation();
     }
 
     public void pointTowards(Coordinate target){
 
         double angle = position.angleTo(target);
 
-        //negative accounts for the JavaFX img rotation going clockwise on positive for some dumb reason
-        setRotation(-Math.toDegrees(angle) + ROTATION_OFFSET);
+        setRotation(angle);
     }
 }

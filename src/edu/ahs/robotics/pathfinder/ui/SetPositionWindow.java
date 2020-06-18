@@ -12,11 +12,12 @@ import javafx.stage.Stage;
 public class SetPositionWindow {
 
     private Robot robot;
+    Stage stage;
 
     public SetPositionWindow(Robot robot) {
         this.robot = robot;
 
-        Stage stage = new Stage();
+        stage = new Stage();
         stage.setTitle("Set Robot Position");
 
         GridPane layout = new GridPane();
@@ -39,6 +40,8 @@ public class SetPositionWindow {
         Button finish = new Button("Finish");
 
         apply.setOnAction(e -> apply(xField.getText(), yField.getText(), headingField.getText()));
+        finish.setOnAction(e -> finish(xField.getText(), yField.getText(), headingField.getText()));
+
 
         layout.add(xText,0,0);
         layout.add(yText,0,1);
@@ -60,7 +63,6 @@ public class SetPositionWindow {
     }
 
     public void apply(String x_, String y_, String heading_){
-
         try{
             double x, y, heading;
             x = Double.valueOf(x_);
@@ -68,8 +70,14 @@ public class SetPositionWindow {
             heading = Math.toRadians(Double.valueOf(heading_));
 
             robot.setPosition(Coordinate.newFromInches(x,y,heading));
+            robot.setRotation(heading);
         } catch (Exception e){
-            System.out.println(); //todo find a better solution to this, like an error dialogue
+            System.out.println("Positioning Failed"); //todo find a better solution to this, like an error dialogue
         }
+    }
+
+    public void finish(String x_, String y_, String heading_){
+        apply(x_, y_, heading_);
+        stage.close();
     }
 }
