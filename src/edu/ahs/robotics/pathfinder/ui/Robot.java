@@ -10,7 +10,8 @@ public class Robot {
     private ImageView robotView;
     private static final double ROTATION_OFFSET = 90; // makes it so the front of the robot points in correct direction (in degrees)
 
-    private Coordinate position = Coordinate.newFromPixels(0,0,0);
+    private Coordinate position = Coordinate.newFromPixels(0,0);
+    private double heading = Math.PI/2.0;
 
     private double centerOffset; // stores the number of pixels from the corner to the center for both the x and y axis
 
@@ -44,11 +45,11 @@ public class Robot {
      */
     private void updateRotation(){
         //negative accounts for the JavaFX img rotation going clockwise on positive for some dumb reason
-        robotView.setRotate(-Math.toDegrees(position.getHeading()) + ROTATION_OFFSET);
+        robotView.setRotate(-Math.toDegrees(heading) + ROTATION_OFFSET);
     }
 
-    public void setRotation(double angle){ //todo make gud
-        position.setHeading(angle);
+    public void setRotation(double angle){
+        heading = angle;
         updateRotation();
     }
 

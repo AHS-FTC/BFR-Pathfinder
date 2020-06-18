@@ -2,13 +2,11 @@ package edu.ahs.robotics.pathfinder.util;
 
 /**
  * A class representing a coordinate on the field. Seamlessly handles the conversions between real life inches and graphical pixels.
- * Also holds heading data.
  * @author Alex Appleby, team 16896
  */
 public class Coordinate { //todo consider removing heading and creating an encapsulating Position class
     private Double pixelX, pixelY;
     private Double inchX, inchY;
-    private double heading; // in radians
 
     private static Coordinate centerCoordinate;
     private static boolean initialized = false;
@@ -16,21 +14,18 @@ public class Coordinate { //todo consider removing heading and creating an encap
 
     /**
      * Inaccessible from outside of class. Use Point.newFromInches() or Point.newFromPixels() instead.
-     * @param heading Heading in radians, where 0 degrees is along the positive X axis (right) and counterclockwise increases.
      */
-    private Coordinate(double heading){
-        this.heading = heading;
+    private Coordinate(){
     }
 
     /**
      * Acts as a constructor. Creates a point given inch coordinates. Origin is in the center of the field.
      * @param xInches Inches from the center of the field along the X axis, where right is increasing.
      * @param yInches Inches from the center of the field along the Y axis, where up is increasing.
-     * @param heading Heading in radians, where 0 degrees is along the positive X axis (right) and counterclockwise increases.
      * @return A new point populated with the given information.
      */
-    public static Coordinate newFromInches(double xInches, double yInches, double heading){
-        Coordinate p = new Coordinate(heading);
+    public static Coordinate newFromInches(double xInches, double yInches){
+        Coordinate p = new Coordinate();
         p.inchX = xInches;
         p.inchY = yInches;
         return p;
@@ -40,11 +35,10 @@ public class Coordinate { //todo consider removing heading and creating an encap
      * Acts as a constructor. Creates a point given pixel coordinates. Origin is the JavaFX default top left corner of the window.
      * @param xPixels Pixels from the top right corner of the field along the X axis, where right is increasing.
      * @param yPixels Pixels from the top right corner of the field along the Y axis, where down is increasing.
-     * @param heading Heading in degrees, where 0 degrees is along the positive X axis (right) and counterclockwise increases.
      * @return A new point populated with the given information.
      */
-    public static Coordinate newFromPixels(double xPixels, double yPixels, double heading){
-        Coordinate p = new Coordinate(heading);
+    public static Coordinate newFromPixels(double xPixels, double yPixels){
+        Coordinate p = new Coordinate();
         p.pixelX = xPixels;
         p.pixelY = yPixels;
         return p;
@@ -72,14 +66,6 @@ public class Coordinate { //todo consider removing heading and creating an encap
         if(pixelY == null)
             calculatePixels();
         return pixelY;
-    }
-
-    public double getHeading(){
-        return heading;
-    }
-
-    public void setHeading(double heading){
-        this.heading = heading;
     }
 
     /**
@@ -144,7 +130,7 @@ public class Coordinate { //todo consider removing heading and creating an encap
         if(!initialized){
             initialized = true;
             scaleFactor = fieldSize / 144.0; //the FTC field is 144 inches across
-            centerCoordinate = newFromPixels(fieldSize / 2.0,fieldSize / 2.0, 0);
+            centerCoordinate = newFromPixels(fieldSize / 2.0,fieldSize / 2.0);
         }
     }
 

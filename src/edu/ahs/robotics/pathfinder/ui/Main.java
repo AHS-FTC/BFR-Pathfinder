@@ -61,9 +61,9 @@ public class Main extends Application {
 
     private void onMouseClick(MouseEvent e){
         if(e.getButton() == MouseButton.PRIMARY){
-            robot.setPosition(Coordinate.newFromPixels(e.getX(),e.getY(),0));
+            robot.setPosition(Coordinate.newFromPixels(e.getX(),e.getY()));
         } else if (e.getButton() == MouseButton.SECONDARY){
-            robot.pointTowards(Coordinate.newFromPixels(e.getX(), e.getY(),0));
+            robot.pointTowards(Coordinate.newFromPixels(e.getX(), e.getY()));
         }
     }
 

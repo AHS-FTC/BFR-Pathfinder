@@ -69,7 +69,7 @@ public class SetPositionWindow {
             y = Double.valueOf(y_);
             heading = Math.toRadians(Double.valueOf(heading_));
 
-            robot.setPosition(Coordinate.newFromInches(x,y,heading));
+            robot.setPosition(Coordinate.newFromInches(x,y));
             robot.setRotation(heading);
         } catch (Exception e){
             System.out.println("Positioning Failed"); //todo find a better solution to this, like an error dialogue
