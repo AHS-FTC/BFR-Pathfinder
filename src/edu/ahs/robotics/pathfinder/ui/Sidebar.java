@@ -5,6 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Separator;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -19,6 +20,7 @@ public class Sidebar {
     private Stage window;
     private Scene scene;
     private VBox verticalLayout;
+    private HBox wayPointLayout;
 
     private Robot robot;
 
@@ -34,6 +36,9 @@ public class Sidebar {
         verticalLayout.getChildren().add(makeTitle());
         verticalLayout.getChildren().add(new Separator(Orientation.HORIZONTAL));
         verticalLayout.getChildren().add(makeSetPositionButton());
+
+        wayPointLayout = new HBox(10);
+        //wayPointLayout.getChildren().add()
 
         scene = new Scene(verticalLayout,300, fieldWindowSize);
         scene.getStylesheets().add("botui/buck.css");
@@ -53,6 +58,13 @@ public class Sidebar {
     private Button makeSetPositionButton(){
         Button b = new Button("Set Robot Position");
         b.setPrefWidth(200);
+        b.setOnAction(e -> new SetPositionWindow(robot));
+        return b;
+    }
+
+    private Button makeNewWaypoint (){
+        Button b = new Button("Add New Waypoint");
+        b.setPrefWidth(100);
         b.setOnAction(e -> new SetPositionWindow(robot));
         return b;
     }
