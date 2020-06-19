@@ -1,8 +1,11 @@
 package edu.ahs.robotics.pathfinder.ui;
 
+import edu.ahs.robotics.pathfinder.environment.Environment;
+import edu.ahs.robotics.pathfinder.util.WayPoint;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.HBox;
@@ -20,15 +23,14 @@ public class Sidebar {
     private Stage window;
     private Scene scene;
     private VBox verticalLayout;
-    private HBox wayPointLayout;
 
-    private Robot robot;
+    private Environment environment;
 
-    public Sidebar(double fieldWindowSize, Robot robot) {
+    public Sidebar(double fieldWindowSize, Environment environment) {
         window = new Stage();
         window.setTitle("BFR Pathfinder UI");
 
-        this.robot = robot;
+        this.environment = environment;
 
         verticalLayout = new VBox(10);
         verticalLayout.setAlignment(Pos.TOP_CENTER);
@@ -37,8 +39,8 @@ public class Sidebar {
         verticalLayout.getChildren().add(new Separator(Orientation.HORIZONTAL));
         verticalLayout.getChildren().add(makeSetPositionButton());
 
-        wayPointLayout = new HBox(10);
-        //wayPointLayout.getChildren().add()
+        verticalLayout.getChildren().add(makeNewWayPointButton());
+        verticalLayout.getChildren().add(makeSetPosAsWayPointButton());
 
         scene = new Scene(verticalLayout,300, fieldWindowSize);
         scene.getStylesheets().add("botui/buck.css");
@@ -58,14 +60,20 @@ public class Sidebar {
     private Button makeSetPositionButton(){
         Button b = new Button("Set Robot Position");
         b.setPrefWidth(200);
-        b.setOnAction(e -> new SetPositionWindow(robot));
+        b.setOnAction(e -> new SetPositionWindow(environment.getRobot()));
         return b;
     }
 
-    private Button makeNewWaypoint (){
+    private Button makeNewWayPointButton (){
         Button b = new Button("Add New Waypoint");
-        b.setPrefWidth(100);
-        b.setOnAction(e -> new SetPositionWindow(robot));
+        b.setOnAction(e -> new NewWayPointWindow(environment));
+        return b;
+    }
+
+    private Button makeSetPosAsWayPointButton (){
+        Button b = new Button("Set Robot Pos as Waypoint");
+        Robot r = environment.getRobot();
+        b.setOnAction(e -> environment.addWayPoint(new WayPoint(r.getCoordinate(), r.getHeading())));
         return b;
     }
 }

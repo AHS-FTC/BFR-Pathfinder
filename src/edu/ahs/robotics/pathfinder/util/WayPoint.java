@@ -1,5 +1,7 @@
 package edu.ahs.robotics.pathfinder.util;
 
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 
 /**
@@ -19,6 +21,7 @@ public class WayPoint {
         this.heading = heading;
 
         circle = new Circle(coordinate.getPixelX(), coordinate.getPixelY(), GRAPHIC_RADIUS);
+        circle.setFill(Color.rgb(253,238,0));
     }
 
     public Circle getGraphic(){

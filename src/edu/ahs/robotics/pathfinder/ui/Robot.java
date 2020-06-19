@@ -27,9 +27,13 @@ public class Robot {
         return robotView;
     }
 
-    public void setPosition(Coordinate position){
+    public void setPosition(Coordinate position){ //todo make all these names make sense
         this.position = position;
         updatePosition();
+    }
+
+    public Coordinate getCoordinate(){
+        return position;
     }
 
     /**
@@ -51,6 +55,10 @@ public class Robot {
     public void setRotation(double angle){
         heading = angle;
         updateRotation();
+    }
+
+    public double getHeading(){ //todo make names not dumb
+        return heading;
     }
 
     public void pointTowards(Coordinate target){
