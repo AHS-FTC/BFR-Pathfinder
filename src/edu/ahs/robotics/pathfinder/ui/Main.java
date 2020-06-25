@@ -21,6 +21,8 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         double windowSize = Screen.getPrimary().getBounds().getMaxY() - 30; //offset gives room for window topbar
 
+        Coordinate.initialize(windowSize);
+
         environment = new Environment(windowSize);
         sidebar = new Sidebar(windowSize, environment);
     }

@@ -1,4 +1,4 @@
-package edu.ahs.robotics.pathfinder.ui;
+package edu.ahs.robotics.pathfinder.environment;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -7,7 +7,7 @@ import javafx.scene.image.ImageView;
 public class Field {
 
     public enum Mode{
-        EMPTY("/botui/emptyfield.png"), //todo make field render straight
+        EMPTY("/botui/emptyfield.png"), //todo make empty field render straight
         SKYSTONE("/botui/ssfieldsimple_cropped.PNG");
 
         String fileLoc;

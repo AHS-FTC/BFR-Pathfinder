@@ -1,15 +1,12 @@
 package edu.ahs.robotics.pathfinder.environment;
 
-import edu.ahs.robotics.pathfinder.ui.Field;
-import edu.ahs.robotics.pathfinder.ui.Robot;
-import edu.ahs.robotics.pathfinder.ui.Sidebar;
 import edu.ahs.robotics.pathfinder.util.Coordinate;
+import edu.ahs.robotics.pathfinder.util.Path;
 import edu.ahs.robotics.pathfinder.util.WayPoint;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 /**
@@ -17,30 +14,25 @@ import javafx.stage.Stage;
  * @author Alex Appleby, team 16896
  */
 public class Environment {
-    private Stage window;
+    private Stage window = new Stage();
     private Scene scene;
-    private Group layout;
+    private Group layout = new Group();
     private Field field;
-    private Robot robot;
+    private Robot robot = new Robot();
+    private Path path = new Path();
 
     public Environment(double windowSize) {
-        window = new Stage();
-        layout = new Group();
-
-        Coordinate.initialize(windowSize);
-
         field = new Field(windowSize);
-        robot = new Robot();
 
         layout.getChildren().add(field.getImageView());
         layout.getChildren().add(robot.getImageView());
+        layout.getChildren().add(path.getGraphics());
 
         scene = new Scene(layout,windowSize,windowSize);
         window.setScene(scene);
         window.setTitle("Black Forest Robotics Pathfinder");
 
         scene.addEventFilter(MouseEvent.MOUSE_CLICKED, this::onMouseClick);
-
 
         window.show();
         lockWindow();
@@ -69,7 +61,7 @@ public class Environment {
     }
 
     public void addWayPoint(WayPoint w){
-        layout.getChildren().add(w.getGraphic());
+        path.addWayPoint(w);
     }
 
 }

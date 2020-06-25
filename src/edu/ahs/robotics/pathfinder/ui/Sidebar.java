@@ -1,14 +1,13 @@
 package edu.ahs.robotics.pathfinder.ui;
 
 import edu.ahs.robotics.pathfinder.environment.Environment;
+import edu.ahs.robotics.pathfinder.environment.Robot;
 import edu.ahs.robotics.pathfinder.util.WayPoint;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Separator;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
