@@ -1,4 +1,4 @@
-package edu.ahs.robotics.pathfinder.ui;
+package edu.ahs.robotics.pathfinder.environment;
 
 import edu.ahs.robotics.pathfinder.util.Coordinate;
 import javafx.scene.image.Image;

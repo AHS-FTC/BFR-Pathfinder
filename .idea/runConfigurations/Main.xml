@@ -4,7 +4,7 @@
     <module name="JFX" />
     <extension name="coverage">
       <pattern>
-        <option name="PATTERN" value="edu.ahs.robotics.pathfinder.ui.*" />
+        <option name="PATTERN" value="edu.ahs.robotics.pathfinder.environment.*" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>
