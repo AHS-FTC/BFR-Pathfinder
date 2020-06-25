@@ -41,7 +41,6 @@ public class Environment {
 
         scene.addEventFilter(MouseEvent.MOUSE_CLICKED, this::onMouseClick);
 
-
         window.show();
         lockWindow();
     }

@@ -2,7 +2,6 @@
   <configuration default="false" name="Main" type="Application" factoryName="Application">
     <option name="MAIN_CLASS_NAME" value="edu.ahs.robotics.pathfinder.ui.Main" />
     <module name="JFX" />
-    <option name="VM_PARAMETERS" value="--module-path F:\Aux_Data\FTC\Code\libs\javafx-sdk-11.0.2\lib --add-modules javafx.controls,javafx.fxml" />
     <extension name="coverage">
       <pattern>
         <option name="PATTERN" value="edu.ahs.robotics.pathfinder.ui.*" />

@@ -14,17 +14,14 @@ import javafx.stage.Stage;
  * An abstract popup window that prompts for an x position, a y position, and a heading.
  * @author Alex Appleby, team 16896
  */
-public abstract class XYHeadingWindow {
+public abstract class XYHeadingWindow extends Window {
 
-    protected Stage stage;
 
     /**
      * @param title The title of the stage.
      */
     protected XYHeadingWindow(String title) {
-
-        stage = new Stage();
-        stage.setTitle(title);
+        super(title);
 
         GridPane layout = new GridPane();
         layout.setPadding(new Insets(20));
@@ -60,12 +57,7 @@ public abstract class XYHeadingWindow {
         layout.add(apply, 0,3);
         layout.add(finish, 1,3);
 
-
-        Scene scene = new Scene(layout);
-        scene.getStylesheets().add("botui/buck.css");
-
-        stage.setScene(scene);
-        stage.show();
+        createScene(layout);
     }
 
     /**
