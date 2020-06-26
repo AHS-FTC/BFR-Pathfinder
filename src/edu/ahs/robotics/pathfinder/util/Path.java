@@ -22,8 +22,12 @@ public class Path {
     private Color color = Color.rgb(253, 238, 0);
     private boolean showInterpolations = true;
 
-    public Path() {
+    private static int pathCount = 0;
+    public String name;
 
+    public Path() {
+        pathCount++;
+        name = "Path"+pathCount;
     }
 
     public void addWayPoint(WayPoint wayPoint) {
@@ -44,19 +48,14 @@ public class Path {
     }
 
     /**
-     * @return An array of every waypoint's graphical element
+     * @return An group of all graphical elements
      */
     public Group getGraphics() {
-//        for (WayPoint w: wayPoints) {
-//            group.getChildren().add(w.getGraphic());
-//        }
-//
-//        if (showInterpolations){
-//            interpolate();//todo interpolate at a reasonable time
-//            group.getChildren().addAll(lines);
-//        }
-
         return grapics;
+    }
+
+    public Color getColor(){
+        return color;
     }
 
     /**

@@ -1,4 +1,4 @@
-package edu.ahs.robotics.pathfinder.ui;
+package edu.ahs.robotics.pathfinder.ui.windows;
 
 import javafx.scene.Node;
 import javafx.scene.Parent;

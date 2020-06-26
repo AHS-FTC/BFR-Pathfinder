@@ -1,14 +1,12 @@
-package edu.ahs.robotics.pathfinder.ui;
+package edu.ahs.robotics.pathfinder.ui.windows;
 
-import edu.ahs.robotics.pathfinder.util.Coordinate;
+import edu.ahs.robotics.pathfinder.ui.text.StandardText;
 import javafx.geometry.Insets;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
 /**
  * An abstract popup window that prompts for an x position, a y position, and a heading.
@@ -28,12 +26,9 @@ public abstract class XYHeadingWindow extends Window {
         layout.setVgap(20);
         layout.setHgap(20);
 
-        Text xText = new Text("X position (in):");
-        xText.getStyleClass().add("standard-text");
-        Text yText = new Text("Y position (in):");
-        yText.getStyleClass().add("standard-text");
-        Text headingText = new Text("Heading (deg):");
-        headingText.getStyleClass().add("standard-text");
+        Text xText = new StandardText("X position (in):");
+        Text yText = new StandardText("Y position (in):");
+        Text headingText = new StandardText("Heading (deg):");
 
         TextField xField = new TextField();
         TextField yField = new TextField();

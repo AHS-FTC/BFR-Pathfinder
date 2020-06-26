@@ -9,6 +9,8 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+
 /**
  * Class that represents the virtual environment containing the field, the robot, etc.
  * @author Alex Appleby, team 16896
@@ -19,14 +21,13 @@ public class Environment {
     private Group layout = new Group();
     private Field field;
     private Robot robot = new Robot();
-    private Path path = new Path();
+    private ArrayList<Path> paths = new ArrayList();
 
     public Environment(double windowSize) {
         field = new Field(windowSize);
 
         layout.getChildren().add(field.getImageView());
         layout.getChildren().add(robot.getImageView());
-        layout.getChildren().add(path.getGraphics());
 
         scene = new Scene(layout,windowSize,windowSize);
         window.setScene(scene);
@@ -36,6 +37,8 @@ public class Environment {
 
         window.show();
         lockWindow();
+
+        paths.add(new Path());//start with an empty path to avoid a null pointer
     }
 
     private void onMouseClick(MouseEvent e){
@@ -60,8 +63,17 @@ public class Environment {
         return robot;
     }
 
-    public void addWayPoint(WayPoint w){
-        path.addWayPoint(w);
+    public void addPath(Path path){
+        paths.add(path);
+        layout.getChildren().add(path.getGraphics());
+    }
+
+    public Path getPath(int index){
+        return paths.get(index);
+    }
+
+    public int pathCount(){
+        return paths.size();
     }
 
 }

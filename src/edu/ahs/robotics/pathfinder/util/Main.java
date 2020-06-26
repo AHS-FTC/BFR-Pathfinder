@@ -1,14 +1,9 @@
-package edu.ahs.robotics.pathfinder.ui;
+package edu.ahs.robotics.pathfinder.util;
 
 import edu.ahs.robotics.pathfinder.environment.Environment;
-import edu.ahs.robotics.pathfinder.util.Coordinate;
+import edu.ahs.robotics.pathfinder.ui.primary.PathWindow;
+import edu.ahs.robotics.pathfinder.ui.primary.Sidebar;
 import javafx.application.Application;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.text.Font;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -16,6 +11,7 @@ public class Main extends Application {
 
     private Sidebar sidebar;
     private Environment environment;
+    private PathWindow pathWindow;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -24,7 +20,8 @@ public class Main extends Application {
         Coordinate.initialize(windowSize);
 
         environment = new Environment(windowSize);
-        sidebar = new Sidebar(windowSize, environment);
+        pathWindow = new PathWindow(environment);
+        sidebar = new Sidebar(windowSize, environment, pathWindow);
     }
 
 
