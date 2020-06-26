@@ -8,6 +8,7 @@ import javafx.scene.shape.Line;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * An ordered collection of waypoints that makes up an autopath.
@@ -19,15 +20,35 @@ public class Path {
     private ArrayList<Line> lines = new ArrayList<>();
     private Group grapics = new Group();
 
-    private Color color = Color.rgb(253, 238, 0);
+    private Color color;
     private boolean showInterpolations = true;
 
     private static int pathCount = 0;
     public String name;
 
+    private static HashMap<Integer,Color> defaultColors = new HashMap();
+
+    static {
+        defaultColors.put(1, Color.rgb(253, 238, 0));
+        defaultColors.put(2, Color.CYAN);
+        defaultColors.put(3, Color.DARKORANGE);
+        defaultColors.put(4, Color.DODGERBLUE);
+        defaultColors.put(5, Color.MAGENTA);
+        defaultColors.put(6, Color.TOMATO);
+    }
+
     public Path() {
         pathCount++;
         name = "Path"+pathCount;
+
+        color = defaultColors.get(pathCount);
+        if(color == null){
+            int r = (int)Math.round(Math.random() * 255.0);
+            int g = (int)Math.round(Math.random() * 255.0);
+            int b = (int)Math.round(Math.random() * 255.0);
+
+            color = Color.rgb(r,g,b);
+        }
     }
 
     public void addWayPoint(WayPoint wayPoint) {
