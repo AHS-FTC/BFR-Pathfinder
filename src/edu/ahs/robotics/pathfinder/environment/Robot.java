@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class Robot {
-    private static final String IMG_PATH = "/botui/realistic_mecanum_green.png";
+    private static final String IMG_PATH = "/ui/realistic_mecanum_green.png";
 
     private ImageView robotView;
     private static final double ROTATION_OFFSET = 90; // makes it so the front of the robot points in correct direction (in degrees)

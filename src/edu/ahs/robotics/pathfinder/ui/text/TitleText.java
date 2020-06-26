@@ -12,7 +12,7 @@ public class TitleText extends Text {
     private static final Font font;
 
     static {
-        font = Font.loadFont(TitleText.class.getResource("/botui/NOOA-Demi-Serif.ttf").toExternalForm(), 10);
+        font = Font.loadFont(TitleText.class.getResource("/ui/NOOA-Demi-Serif.ttf").toExternalForm(), 10);
     }
 
     public TitleText(String text) {

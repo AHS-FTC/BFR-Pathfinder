@@ -11,7 +11,6 @@ public class Main extends Application {
 
     private Sidebar sidebar;
     private Environment environment;
-    private PathWindow pathWindow;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -20,8 +19,8 @@ public class Main extends Application {
         Coordinate.initialize(windowSize);
 
         environment = new Environment(windowSize);
-        pathWindow = new PathWindow(environment);
-        sidebar = new Sidebar(windowSize, environment, pathWindow);
+        PathWindow.init(environment);
+        sidebar = new Sidebar(windowSize, environment);
     }
 
 

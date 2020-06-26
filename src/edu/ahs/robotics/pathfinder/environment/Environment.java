@@ -1,5 +1,6 @@
 package edu.ahs.robotics.pathfinder.environment;
 
+import edu.ahs.robotics.pathfinder.ui.primary.PathWindow;
 import edu.ahs.robotics.pathfinder.util.Coordinate;
 import edu.ahs.robotics.pathfinder.util.Path;
 import edu.ahs.robotics.pathfinder.util.WayPoint;
@@ -37,8 +38,6 @@ public class Environment {
 
         window.show();
         lockWindow();
-
-        paths.add(new Path());//start with an empty path to avoid a null pointer
     }
 
     private void onMouseClick(MouseEvent e){
@@ -66,14 +65,10 @@ public class Environment {
     public void addPath(Path path){
         paths.add(path);
         layout.getChildren().add(path.getGraphics());
+        PathWindow.getInstance().addPath(path);
     }
 
-    public Path getPath(int index){
-        return paths.get(index);
+    public ArrayList<Path> getPaths(){
+        return paths;
     }
-
-    public int pathCount(){
-        return paths.size();
-    }
-
 }

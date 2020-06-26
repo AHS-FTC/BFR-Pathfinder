@@ -1,6 +1,5 @@
 package edu.ahs.robotics.pathfinder.ui.windows;
 
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -22,7 +21,7 @@ public class Window {
      */
     protected void createScene(Parent root){
         scene = new Scene(root);
-        scene.getStylesheets().add("botui/buck.css");
+        scene.getStylesheets().add("ui/buck.css");
         stage.setScene(scene);
         stage.show();
     }

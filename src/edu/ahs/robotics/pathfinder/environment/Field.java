@@ -7,8 +7,8 @@ import javafx.scene.image.ImageView;
 public class Field {
 
     public enum Mode{
-        EMPTY("/botui/emptyfield.png"), //todo make empty field render straight
-        SKYSTONE("/botui/ssfieldsimple_cropped.PNG");
+        EMPTY("/ui/emptyfield.png"), //todo make empty field render straight
+        SKYSTONE("/ui/ssfieldsimple_cropped.PNG");
 
         String fileLoc;
         Mode(String fileLoc) {

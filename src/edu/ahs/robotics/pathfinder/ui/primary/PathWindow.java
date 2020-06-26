@@ -5,12 +5,19 @@ import edu.ahs.robotics.pathfinder.ui.text.StandardText;
 import edu.ahs.robotics.pathfinder.ui.text.TitleText;
 import edu.ahs.robotics.pathfinder.ui.windows.Window;
 import edu.ahs.robotics.pathfinder.util.Path;
+import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.Separator;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
 
 public class PathWindow extends Window { //todo consider making major windows singletons in nature
 
@@ -20,41 +27,60 @@ public class PathWindow extends Window { //todo consider making major windows si
     private GridPane grid;
 
     private Path activePath = null;
-    //private ArrayList<Path> paths;
+    private ArrayList<Path> paths;
 
-    public PathWindow(Environment environment) {
+    private ToggleGroup toggleGroup = new ToggleGroup();
+
+    private static PathWindow instance = null;
+
+    private PathWindow(Environment environment) {
         super("Paths");
         this.environment = environment;
         //paths = environment.getPaths();
         Stage stage = new Stage();
+        stage.setMinWidth(300);
         VBox vBox = new VBox(10);
         grid = new GridPane();
         grid.setHgap(20);
         grid.setVgap(10);
+        grid.setPadding(new Insets(15));
 
-        vBox.setAlignment(Pos.CENTER);
+        vBox.setAlignment(Pos.TOP_CENTER);
         vBox.getChildren().add(new TitleText("Paths"));
-
-        renderPathWindow();
+        vBox.getChildren().add(new Separator(Orientation.HORIZONTAL));
 
         vBox.getChildren().add(grid);
         createScene(vBox);
 
-        activePath = environment.getPath(0);
-
+        paths = environment.getPaths();
     }
 
-    private void renderPathWindow(){
-        for (int i = 0; i < environment.pathCount(); i++) {
-            Path path = environment.getPath(i);
-            Text text = new StandardText(path.name);
+    public void addPath(Path path){
+        int index = paths.size() - 1;
 
-            Rectangle colorBox = new Rectangle(COLOR_BOX_SIZE, COLOR_BOX_SIZE, path.getColor());
+        Text text = new StandardText(path.name);
+        Rectangle colorBox = new Rectangle(COLOR_BOX_SIZE, COLOR_BOX_SIZE, path.getColor());
+        RadioButton activePathButton = new RadioButton();
+        activePathButton.setToggleGroup(toggleGroup);
 
-            grid.add(text, 0, i);
-            grid.add(colorBox, 1, i);
-        }
+        grid.add(activePathButton, 0, index);
+        grid.add(text, 1, index);
+        grid.add(colorBox, 2, index);
+        stage.sizeToScene();
     }
+
+    public static void init(Environment e){
+        instance = new PathWindow(e);
+        Path newPath = new Path();
+        instance.environment.addPath(newPath);
+        instance.activePath = newPath;
+    }
+
+    public static PathWindow getInstance(){
+        return instance;
+    }
+
+
     public Path getActivePath(){
         return activePath;
     }
