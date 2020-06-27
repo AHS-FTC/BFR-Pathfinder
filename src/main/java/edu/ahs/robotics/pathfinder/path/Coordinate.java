@@ -1,4 +1,4 @@
-package edu.ahs.robotics.pathfinder.util;
+package edu.ahs.robotics.pathfinder.path;
 
 /**
  * A class representing a coordinate on the field. Seamlessly handles the conversions between real life inches and graphical pixels.

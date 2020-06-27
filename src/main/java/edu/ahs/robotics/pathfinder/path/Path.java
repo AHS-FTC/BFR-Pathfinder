@@ -2,7 +2,6 @@ package edu.ahs.robotics.pathfinder.path;
 
 
 import edu.ahs.robotics.pathfinder.ui.primary.PathWindow;
-import edu.ahs.robotics.pathfinder.util.Coordinate;
 import javafx.scene.Group;
 import javafx.scene.control.RadioButton;
 import javafx.scene.paint.Color;

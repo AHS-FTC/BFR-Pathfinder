@@ -1,6 +1,7 @@
 package edu.ahs.robotics.pathfinder.util;
 
 import edu.ahs.robotics.pathfinder.environment.Environment;
+import edu.ahs.robotics.pathfinder.path.Coordinate;
 import edu.ahs.robotics.pathfinder.ui.primary.PathWindow;
 import edu.ahs.robotics.pathfinder.ui.primary.Sidebar;
 import javafx.application.Application;

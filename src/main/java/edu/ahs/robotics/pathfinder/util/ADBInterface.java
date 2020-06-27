@@ -40,7 +40,7 @@ public class ADBInterface {
             ProcessBuilder pb = new ProcessBuilder(allCommand);
             pb.redirectErrorStream(true);
             Process p = pb.start();
-            p.waitFor();
+            //p.waitFor();
             BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
             String _temp = null;
             List<String> line = new ArrayList<>();

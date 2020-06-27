@@ -2,7 +2,7 @@ package edu.ahs.robotics.pathfinder.environment;
 
 import edu.ahs.robotics.pathfinder.ui.primary.PathWindow;
 import edu.ahs.robotics.pathfinder.path.Path;
-import edu.ahs.robotics.pathfinder.util.Coordinate;
+import edu.ahs.robotics.pathfinder.path.Coordinate;
 import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Scene;

@@ -2,7 +2,7 @@ package edu.ahs.robotics.pathfinder.ui.windows;
 
 
 import edu.ahs.robotics.pathfinder.environment.Robot;
-import edu.ahs.robotics.pathfinder.util.Coordinate;
+import edu.ahs.robotics.pathfinder.path.Coordinate;
 
 public class SetPositionWindow extends XYHeadingWindow {
 
