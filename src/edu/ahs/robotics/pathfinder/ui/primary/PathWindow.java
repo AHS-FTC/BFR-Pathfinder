@@ -15,6 +15,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -43,24 +44,25 @@ public class PathWindow extends Window { //todo consider making major windows si
         grid = new GridPane();
         grid.setHgap(20);
         grid.setVgap(10);
-        grid.setPadding(new Insets(15));
+        grid.setPadding(new Insets(15, 50,15,50));
 
         vBox.setAlignment(Pos.TOP_CENTER);
         vBox.getChildren().add(new TitleText("Paths"));
         vBox.getChildren().add(new Separator(Orientation.HORIZONTAL));
 
         vBox.getChildren().add(grid);
+
         createScene(vBox);
 
         paths = environment.getPaths();
     }
 
     public void addPath(Path path){
-        int index = paths.size() - 1;
+        int index = paths.size() - 1;//todo consider removing paths arraylist
 
         Text text = new StandardText(path.name);
         Rectangle colorBox = new Rectangle(COLOR_BOX_SIZE, COLOR_BOX_SIZE, path.getColor());
-        RadioButton activePathButton = new RadioButton();
+        RadioButton activePathButton = path.getRadioButton();
         activePathButton.setToggleGroup(toggleGroup);
 
         grid.add(activePathButton, 0, index);
@@ -69,11 +71,20 @@ public class PathWindow extends Window { //todo consider making major windows si
         stage.sizeToScene();
     }
 
+    public void setActivePath(Path path){
+        activePath = path;
+    }
+
     public static void init(Environment e){
         instance = new PathWindow(e);
         Path newPath = new Path();
         instance.environment.addPath(newPath);
         instance.activePath = newPath;
+
+        double x = Screen.getPrimary().getBounds().getMaxX() - instance.stage.getWidth();
+
+        instance.stage.setX(x);
+        instance.stage.setY(0);
     }
 
     public static PathWindow getInstance(){

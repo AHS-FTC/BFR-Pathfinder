@@ -1,8 +1,10 @@
 package edu.ahs.robotics.pathfinder.util;
 
 
+import edu.ahs.robotics.pathfinder.ui.primary.PathWindow;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.control.RadioButton;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 
@@ -23,6 +25,8 @@ public class Path {
     private Color color;
     private boolean showInterpolations = true;
 
+    private RadioButton radioButton = new RadioButton();
+
     private static int pathCount = 0;
     public String name;
 
@@ -41,6 +45,8 @@ public class Path {
         pathCount++;
         name = "Path"+pathCount;
 
+        radioButton.selectedProperty().addListener(e -> PathWindow.getInstance().setActivePath(this));
+
         color = defaultColors.get(pathCount);
         if(color == null){
             int r = (int)Math.round(Math.random() * 255.0);
@@ -54,6 +60,7 @@ public class Path {
     public void addWayPoint(WayPoint wayPoint) {
         wayPoints.add(wayPoint);
         wayPoint.setColor(color);
+        wayPoint.setCount(wayPoints.size());
 
         if (wayPoints.size() > 1) {
             int newestPointIndex = wayPoints.size() - 1;
@@ -77,6 +84,10 @@ public class Path {
 
     public Color getColor(){
         return color;
+    }
+
+    public RadioButton getRadioButton(){
+        return radioButton;
     }
 
     /**

@@ -21,6 +21,8 @@ public class Robot {
         robotView.setPreserveRatio(true);
         robotView.setFitWidth(Coordinate.convertInchesToPixels(18.0));
         centerOffset = robotView.getFitWidth() / 2.0;
+
+
     }
 
     public ImageView getImageView(){

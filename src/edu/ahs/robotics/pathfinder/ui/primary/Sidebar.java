@@ -70,7 +70,7 @@ public class Sidebar {
 
     private Button makeNewWayPointButton (){
         Button b = new Button("Add New Waypoint");
-        b.setOnAction(e -> new NewWayPointWindow(environment, pathWindow));
+        b.setOnAction(e -> new NewWayPointWindow(pathWindow));
         return b;
     }
 

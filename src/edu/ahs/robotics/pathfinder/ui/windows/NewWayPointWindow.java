@@ -3,16 +3,15 @@ package edu.ahs.robotics.pathfinder.ui.windows;
 import edu.ahs.robotics.pathfinder.environment.Environment;
 import edu.ahs.robotics.pathfinder.ui.primary.PathWindow;
 import edu.ahs.robotics.pathfinder.util.Coordinate;
+import edu.ahs.robotics.pathfinder.util.Path;
 import edu.ahs.robotics.pathfinder.util.WayPoint;
 
 public class NewWayPointWindow extends XYHeadingWindow {
 
-    private Environment environment;
-    private PathWindow pathWindow;
+    private PathWindow pathWindow = PathWindow.getInstance();
 
-    public NewWayPointWindow(Environment environment, PathWindow pathWindow) {
+    public NewWayPointWindow(PathWindow pathWindow) {
         super("Create New Waypoint");
-        this.environment = environment;
     }
 
     @Override

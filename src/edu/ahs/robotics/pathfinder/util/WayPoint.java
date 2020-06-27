@@ -21,14 +21,12 @@ public class WayPoint {
     private Text label;
     private Circle circle;
 
-    private static int count; //todo integrate count with higher level collection
+    private int count;
     private static final double X_OFFSET = 4.0;
     private Color color = Color.WHITE;
 
 
     public WayPoint(Coordinate coordinate, double heading) {
-        count++;
-
         this.coordinate = coordinate;
         this.heading = heading;
 
@@ -50,6 +48,11 @@ public class WayPoint {
         this.color = color;
         circle.setFill(color);
         label.setFill(color);
+    }
+
+    /*protected*/ void setCount (int count){
+        this.count = count;
+        label.setText(String.valueOf(count));
     }
 
     public Node getGraphic(){
