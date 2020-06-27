@@ -2,12 +2,10 @@ package edu.ahs.robotics.pathfinder.environment;
 
 import edu.ahs.robotics.pathfinder.ui.primary.PathWindow;
 import edu.ahs.robotics.pathfinder.util.Coordinate;
-import edu.ahs.robotics.pathfinder.util.Path;
-import edu.ahs.robotics.pathfinder.util.WayPoint;
+import edu.ahs.robotics.pathfinder.path.Path;
 import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;

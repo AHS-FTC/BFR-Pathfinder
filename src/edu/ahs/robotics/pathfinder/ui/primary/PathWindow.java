@@ -4,7 +4,7 @@ import edu.ahs.robotics.pathfinder.environment.Environment;
 import edu.ahs.robotics.pathfinder.ui.text.StandardText;
 import edu.ahs.robotics.pathfinder.ui.text.TitleText;
 import edu.ahs.robotics.pathfinder.ui.windows.Window;
-import edu.ahs.robotics.pathfinder.util.Path;
+import edu.ahs.robotics.pathfinder.path.Path;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;

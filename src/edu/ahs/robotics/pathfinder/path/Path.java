@@ -1,14 +1,13 @@
-package edu.ahs.robotics.pathfinder.util;
+package edu.ahs.robotics.pathfinder.path;
 
 
 import edu.ahs.robotics.pathfinder.ui.primary.PathWindow;
+import edu.ahs.robotics.pathfinder.util.Coordinate;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.control.RadioButton;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 

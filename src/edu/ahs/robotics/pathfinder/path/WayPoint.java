@@ -1,5 +1,6 @@
-package edu.ahs.robotics.pathfinder.util;
+package edu.ahs.robotics.pathfinder.path;
 
+import edu.ahs.robotics.pathfinder.util.Coordinate;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
