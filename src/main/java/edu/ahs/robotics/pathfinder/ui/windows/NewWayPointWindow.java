@@ -1,8 +1,9 @@
 package edu.ahs.robotics.pathfinder.ui.windows;
 
+
+import edu.ahs.robotics.pathfinder.path.WayPoint;
 import edu.ahs.robotics.pathfinder.ui.primary.PathWindow;
 import edu.ahs.robotics.pathfinder.util.Coordinate;
-import edu.ahs.robotics.pathfinder.path.WayPoint;
 
 public class NewWayPointWindow extends XYHeadingWindow {
 

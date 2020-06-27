@@ -1,4 +1,4 @@
-package edu.ahs.robotics.pathfinder.test;
+package edu.ahs.robotics.pathfinder;
 
 import edu.ahs.robotics.pathfinder.util.Coordinate;
 import org.junit.Assert;

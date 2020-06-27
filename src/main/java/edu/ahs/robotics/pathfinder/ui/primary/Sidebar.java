@@ -1,12 +1,13 @@
 package edu.ahs.robotics.pathfinder.ui.primary;
 
+
 import edu.ahs.robotics.pathfinder.environment.Environment;
 import edu.ahs.robotics.pathfinder.environment.Robot;
+import edu.ahs.robotics.pathfinder.path.Path;
+import edu.ahs.robotics.pathfinder.path.WayPoint;
 import edu.ahs.robotics.pathfinder.ui.text.TitleText;
 import edu.ahs.robotics.pathfinder.ui.windows.NewWayPointWindow;
 import edu.ahs.robotics.pathfinder.ui.windows.SetPositionWindow;
-import edu.ahs.robotics.pathfinder.path.Path;
-import edu.ahs.robotics.pathfinder.path.WayPoint;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
