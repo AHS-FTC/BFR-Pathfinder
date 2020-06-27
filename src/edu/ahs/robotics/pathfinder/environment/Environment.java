@@ -4,8 +4,10 @@ import edu.ahs.robotics.pathfinder.ui.primary.PathWindow;
 import edu.ahs.robotics.pathfinder.util.Coordinate;
 import edu.ahs.robotics.pathfinder.util.Path;
 import edu.ahs.robotics.pathfinder.util.WayPoint;
+import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -33,6 +35,7 @@ public class Environment {
         scene = new Scene(layout,windowSize,windowSize);
         window.setScene(scene);
         window.setTitle("Black Forest Robotics Pathfinder");
+        window.onCloseRequestProperty().setValue(e -> Platform.exit());
 
         scene.addEventFilter(MouseEvent.MOUSE_CLICKED, this::onMouseClick);
 

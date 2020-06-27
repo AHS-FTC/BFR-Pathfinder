@@ -78,6 +78,7 @@ public class PathWindow extends Window { //todo consider making major windows si
     public static void init(Environment e){
         instance = new PathWindow(e);
         Path newPath = new Path();
+        newPath.getRadioButton().setSelected(true);
         instance.environment.addPath(newPath);
         instance.activePath = newPath;
 
