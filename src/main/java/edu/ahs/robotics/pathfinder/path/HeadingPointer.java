@@ -16,27 +16,64 @@ public class HeadingPointer extends Polygon {
     public HeadingPointer(double radius, Coordinate coordinate, double heading) {
         super();
         this.heading = heading;
+        boundingCircle = new Circle(coordinate.getPixelX(), coordinate.getPixelY(), radius);
+        calculateVertices();
 
-        boundingCircle = new Circle(coordinate.getPixelX(), coordinate.getInchX(), radius);
-        Circle c;
     }
 
+    /**
+     * Uses this geometric algorithm based on this one to inscribe a triangle within the bounding circle:
+     * https://www.mathopenref.com/constinequilateral.html
+     *
+     * Abbreviated algorithm:
+     * https://docs.google.com/drawings/d/1ZxPu5iXj0khDuv2S9AdNX8FE6mGZ9-M6tGRqMZUt_-0/edit?usp=sharing
+     */
     private void calculateVertices(){
         points.clear();
 
-        Coordinate[] vertices = new Coordinate[3];
+        Coordinate[] vertices = new Coordinate[4];
 
-        vertices[0] = getPointerVertex();
+        Coordinate p = getPointerVertex();
+
+        vertices[0] = p;
+
+        //diametric opposite of pointer vertex
+        Coordinate d;
+
+        double dx = boundingCircle.x - p.getPixelX();
+        double dy = boundingCircle.y - p.getPixelY();
+
+        //apply offset from center to find diametric point
+        d = Coordinate.newFromPixels(boundingCircle.x + dx, boundingCircle.y + dy);
+
+        Circle constructionCircle = new Circle(d.getPixelX(), d.getPixelY(), boundingCircle.radius);
+
+        Coordinate[] corners = constructionCircle.findIntersection(boundingCircle);
+
+        vertices[1] = corners[0];
+        //add the center point to the polygon to indicate clear directionality
+        vertices[2] = Coordinate.newFromPixels(boundingCircle.x, boundingCircle.y);
+        vertices[3] = corners[1];
 
 
+        //add all vertices to the Polygon gui element
 
+        for (Coordinate c : vertices) {
+            getPoints().add(c.getPixelX());
+            getPoints().add(c.getPixelY());
+        }
 
+    }
+
+    public void setHeading(double heading){
+        this.heading = heading;
+        calculateVertices();
     }
 
     /**
      * Gets the vertex that acts as the 'tip' of the triangle, pointing in the direction of the heading
      */
-    private Coordinate getPointerVertex(){
+    /*protected for testing*/ Coordinate getPointerVertex(){
 
         //just basic trig
         double dx = boundingCircle.radius * Math.cos(heading);
@@ -44,7 +81,7 @@ public class HeadingPointer extends Polygon {
 
         //add relative to center
         double x = boundingCircle.x + dx;
-        double y = boundingCircle.y + dy;
+        double y = boundingCircle.y - dy; //negative because y axis runs down (dumb asf)
 
         return Coordinate.newFromPixels(x,y);
     }
@@ -77,7 +114,7 @@ public class HeadingPointer extends Polygon {
             //in a more thorough implementation, one might check for solvability here. we don't care.
 
             //a is the distance from the center of this circle to the 'midpoint' between the two points of intersection
-            double a = ((radius*radius) - (other.radius*other.radius) + (d*d)/(2*d));
+            double a = ((radius*radius) - (other.radius*other.radius) + (d*d))/(2*d);
 
             //the 'midpoint' x and y
             double mpX = x + (dx * (a/d));

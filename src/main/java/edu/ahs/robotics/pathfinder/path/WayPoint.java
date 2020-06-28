@@ -15,7 +15,7 @@ import javafx.scene.text.Text;
  */
 public class WayPoint {
 
-    private static final double GRAPHIC_RADIUS = 4;
+    private static final double GRAPHIC_RADIUS = 6;
 
     private Coordinate coordinate;
 
@@ -26,6 +26,7 @@ public class WayPoint {
     private Group group;
     private Text label;
     private Circle circle;
+    private HeadingPointer headingPointer;
 
     private int count;
     private static final double X_OFFSET = 4.0;
@@ -38,6 +39,7 @@ public class WayPoint {
         this(coordinate);
         this.heading = heading;
         ambiguous = false;
+        headingPointer.setHeading(heading);
     }
 
     /**
@@ -58,7 +60,9 @@ public class WayPoint {
 
         group = new Group();
 
-        group.getChildren().addAll(circle, label);
+        headingPointer = new HeadingPointer(GRAPHIC_RADIUS, coordinate, 0);
+
+        group.getChildren().addAll(headingPointer, label);
     }
 
     /**
@@ -66,6 +70,7 @@ public class WayPoint {
      */
     public void setHeading(double heading){ // setter enforces heading primitivism
         this.heading = heading;
+        headingPointer.setHeading(heading);
     }
 
     public Double getHeading(){ //nonprimitive to hold ambiguous null value
@@ -90,6 +95,7 @@ public class WayPoint {
     /*protected*/ void setColor(Color color){ //only use in path package
         this.color = color;
         circle.setFill(color);
+        headingPointer.setFill(color);
         label.setFill(color);
     }
 
