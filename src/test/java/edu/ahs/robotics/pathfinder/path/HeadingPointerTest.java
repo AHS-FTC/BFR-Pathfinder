@@ -5,7 +5,6 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -17,8 +16,8 @@ public class HeadingPointerTest {
 
         //scenario: https://www.desmos.com/calculator/i1zuf1jl83
 
-        HeadingPointer.Circle c1 = new HeadingPointer.Circle(0,0,2);
-        HeadingPointer.Circle c2 = new HeadingPointer.Circle(2,0,2);
+        HeadingPointer.MathCircle c1 = new HeadingPointer.MathCircle(0,0,2);
+        HeadingPointer.MathCircle c2 = new HeadingPointer.MathCircle(2,0,2);
 
         Coordinate int1 = Coordinate.newFromPixels(1, -1.732);
         Coordinate int2 = Coordinate.newFromPixels(1, 1.732);
@@ -40,8 +39,8 @@ public class HeadingPointerTest {
 
         //scenario: https://www.desmos.com/calculator/rkktvzcdy8
 
-        HeadingPointer.Circle c1 = new HeadingPointer.Circle(-2.6,3.1,2.5);
-        HeadingPointer.Circle c2 = new HeadingPointer.Circle(.4,4,1);
+        HeadingPointer.MathCircle c1 = new HeadingPointer.MathCircle(-2.6,3.1,2.5);
+        HeadingPointer.MathCircle c2 = new HeadingPointer.MathCircle(.4,4,1);
 
         Coordinate int1 = Coordinate.newFromPixels(-.494, 4.448);
         Coordinate int2 = Coordinate.newFromPixels(-.1, 3.134);
@@ -96,7 +95,7 @@ public class HeadingPointerTest {
             h.setFill(Color.rgb(220,220,0));
 
             Group g = new Group();
-            g.getChildren().add(h);
+            g.getChildren().add(h.getGraphics());
 
             Scene scene = new Scene(g, 500,500);
             stage.setScene(scene);

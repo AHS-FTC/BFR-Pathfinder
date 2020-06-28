@@ -59,10 +59,9 @@ public class WayPoint {
         label.setFill(color);
 
         group = new Group();
+        headingPointer = new HeadingPointer(GRAPHIC_RADIUS, coordinate);
 
-        headingPointer = new HeadingPointer(GRAPHIC_RADIUS, coordinate, 0);
-
-        group.getChildren().addAll(headingPointer, label);
+        group.getChildren().addAll(headingPointer.getGraphics(), label);
     }
 
     /**

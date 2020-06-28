@@ -1,24 +1,32 @@
 package edu.ahs.robotics.pathfinder.path;
 
-import javafx.collections.ObservableList;
+import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 
 /**
- * A graphical triangle that
+ * A graphical triangle that points in the direction of a WayPoint
  */
-public class HeadingPointer extends Polygon {
+public class HeadingPointer {
 
-    private double heading;
-    private Circle boundingCircle;
-    private ObservableList<Double> points = getPoints();
+    private Double heading; //nonprimitive for ambiguous values
+    private MathCircle boundingCircle;
+    private Polygon arrow = new Polygon();
+    private Circle circleGraphic;
+    private Group group = new Group();
 
-
-    public HeadingPointer(double radius, Coordinate coordinate, double heading) {
+    public HeadingPointer(double radius, Coordinate coordinate) {
         super();
-        this.heading = heading;
-        boundingCircle = new Circle(coordinate.getPixelX(), coordinate.getPixelY(), radius);
-        calculateVertices();
+        boundingCircle = new MathCircle(coordinate.getPixelX(), coordinate.getPixelY(), radius);
+        circleGraphic = new Circle(coordinate.getPixelX(), coordinate.getPixelY(), radius);
+        group.getChildren().addAll(arrow, circleGraphic);
+    }
 
+    public HeadingPointer(double radius, Coordinate coordinate, double heading){
+        this(radius, coordinate);
+        setHeading(heading);
     }
 
     /**
@@ -29,7 +37,7 @@ public class HeadingPointer extends Polygon {
      * https://docs.google.com/drawings/d/1ZxPu5iXj0khDuv2S9AdNX8FE6mGZ9-M6tGRqMZUt_-0/edit?usp=sharing
      */
     private void calculateVertices(){
-        points.clear();
+        arrow.getPoints().clear();
 
         Coordinate[] vertices = new Coordinate[4];
 
@@ -46,7 +54,7 @@ public class HeadingPointer extends Polygon {
         //apply offset from center to find diametric point
         d = Coordinate.newFromPixels(boundingCircle.x + dx, boundingCircle.y + dy);
 
-        Circle constructionCircle = new Circle(d.getPixelX(), d.getPixelY(), boundingCircle.radius);
+        MathCircle constructionCircle = new MathCircle(d.getPixelX(), d.getPixelY(), boundingCircle.radius);
 
         Coordinate[] corners = constructionCircle.findIntersection(boundingCircle);
 
@@ -59,15 +67,36 @@ public class HeadingPointer extends Polygon {
         //add all vertices to the Polygon gui element
 
         for (Coordinate c : vertices) {
-            getPoints().add(c.getPixelX());
-            getPoints().add(c.getPixelY());
+            arrow.getPoints().add(c.getPixelX());
+            arrow.getPoints().add(c.getPixelY());
         }
 
     }
 
+    public void setFill(Paint fill){
+        arrow.setFill(fill);
+        circleGraphic.setFill(fill);
+    }
+
     public void setHeading(double heading){
+
+        if(circleGraphic.isVisible()){
+            circleGraphic.setVisible(false);
+        }
+
         this.heading = heading;
         calculateVertices();
+    }
+
+    public Node getGraphics(){
+        return group;
+    }
+
+    /**
+     * Does this pointer have a specified heading?
+     */
+    public boolean isAmbiguous(){
+        return heading == null;
     }
 
     /**
@@ -87,10 +116,10 @@ public class HeadingPointer extends Polygon {
     }
 
 
-    /*protected for testing*/ static class Circle{
+    /*protected for testing*/ static class MathCircle {
         /*protected*/ double x, y, radius;
 
-        /*protected*/ Circle(double x, double y, double radius) {
+        /*protected*/ MathCircle(double x, double y, double radius) {
             this.x = x;
             this.y = y;
             this.radius = radius;
@@ -103,7 +132,7 @@ public class HeadingPointer extends Polygon {
          * Based on the C example:
          * http://paulbourke.net/geometry/circlesphere/tvoght.c
          */
-        /*protected*/ Coordinate[] findIntersection(Circle other){
+        /*protected*/ Coordinate[] findIntersection(MathCircle other){
 
             //determine the straight line distance between the centers
             double dx = other.x - x;
