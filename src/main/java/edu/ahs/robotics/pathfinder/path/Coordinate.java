@@ -4,7 +4,7 @@ package edu.ahs.robotics.pathfinder.path;
  * A class representing a coordinate on the field. Seamlessly handles the conversions between real life inches and graphical pixels.
  * @author Alex Appleby, team 16896
  */
-public class Coordinate { //todo consider removing heading and creating an encapsulating Position class
+public class Coordinate {
     private Double pixelX, pixelY;
     private Double inchX, inchY;
 
@@ -121,6 +121,37 @@ public class Coordinate { //todo consider removing heading and creating an encap
         return Math.atan2(dy,dx);
     }
 
+    @Override
+    public boolean equals(Object obj) { //todo consider making equals method run unit conversions
+        if(obj == this){
+            return true;
+        }
+
+        if(!(obj instanceof Coordinate)){
+            return false;
+        }
+
+        Coordinate c = (Coordinate)obj;
+
+        boolean inchesAreEqual = false;
+        boolean pixelsAreEqual = false;
+
+        if (inchX != null && inchY != null){ //don't run this check if inches aren't defined
+            if(inchX == c.inchX && inchY == c.inchY){
+                inchesAreEqual = true;
+            }
+        }
+        if (pixelX != null && pixelY != null){ //don't run this check if inches aren't defined
+            if(pixelX == c.pixelX && pixelY == c.pixelY){
+                pixelsAreEqual = true;
+            }
+        }
+
+        if(inchesAreEqual || pixelsAreEqual){
+            return true;
+        } else return false;
+
+    }
 
     /**
      * Initializes the coordinate system with knowledge of field size.
