@@ -56,6 +56,12 @@ public class Path {
     }
 
     public void addWayPoint(WayPoint wayPoint) {
+
+        //auto assign headings to ambiguous waypoints
+        if(wayPoint.getHeading() == null){
+            //do some shit
+        }
+
         wayPoints.add(wayPoint);
         wayPoint.setColor(color);
         wayPoint.setCount(wayPoints.size());
