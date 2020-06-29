@@ -44,8 +44,8 @@ public class PathWindow extends Window { //todo consider making major windows si
         VBox vBox = new VBox(10);
         grid = new GridPane();
         grid.setHgap(20);
-        grid.setVgap(10);
-        grid.setPadding(new Insets(15, 50,15,50));
+        grid.setVgap(-10);
+        grid.setPadding(new Insets(5, 50,5,50));
 
         vBox.setAlignment(Pos.TOP_CENTER);
         vBox.getChildren().add(new TitleText("Paths"));
@@ -66,9 +66,10 @@ public class PathWindow extends Window { //todo consider making major windows si
         RadioButton activePathButton = path.getRadioButton();
         activePathButton.setToggleGroup(toggleGroup);
 
-        grid.add(activePathButton, 0, index);
-        grid.add(text, 1, index);
-        grid.add(colorBox, 2, index);
+        grid.add(path.getViewBox(),0, index);
+        grid.add(activePathButton, 1, index);
+        grid.add(text, 2, index);
+        grid.add(colorBox, 3, index);
         stage.sizeToScene();
     }
 

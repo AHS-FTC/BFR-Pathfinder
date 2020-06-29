@@ -34,3 +34,29 @@
   -fx-mark-highlight-color: #43b92b ;
 
 }
+
+.check-box>.box {
+  -fx-background-color: transparent;
+}
+
+/* Image Credits
+Eye by Leyla Jacqueline from the Noun Project
+Eye by Sudhakar from the Noun Project
+*/
+.check-box>.box>.mark {
+  -fx-padding: 15px;
+  -fx-background-size: cover;
+  -fx-background-position: center;
+
+  -fx-mark-highlight-color: transparent;
+  -fx-background-image: url("open_eye.png");
+
+  -fx-background-position: center;
+  -fx-background-repeat: stretch;
+  -fx-shape: none;
+}
+
+.check-box:selected>.box>.mark{
+  -fx-background-color: transparent;
+  -fx-background-image: url("closed_eye.png");
+}

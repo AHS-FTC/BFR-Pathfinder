@@ -1,9 +1,5 @@
 ---- Alex's Dev Todos ----
 
-- Add show/hide checkbox next to paths
-    - Implement Show/Hide on path
-    - Make checkbox CSS
-
 - Create waypoint Selection
     - Add 'selected' graphic to waypoint
     - Filter clicks somehow

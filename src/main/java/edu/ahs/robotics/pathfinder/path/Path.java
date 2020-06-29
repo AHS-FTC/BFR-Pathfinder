@@ -2,11 +2,16 @@ package edu.ahs.robotics.pathfinder.path;
 
 
 import edu.ahs.robotics.pathfinder.ui.primary.PathWindow;
+import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -18,12 +23,12 @@ import java.util.HashMap;
 public class Path {
     private ArrayList<WayPoint> wayPoints = new ArrayList<>();
     private ArrayList<Line> lines = new ArrayList<>();
-    private Group grapics = new Group();
+    private Group graphics = new Group();
 
     private Color color;
-    private boolean showInterpolations = true;
 
     private RadioButton radioButton = new RadioButton();
+    private CheckBox viewBox = new CheckBox();
 
     private static int pathCount = 0;
     public String name;
@@ -44,6 +49,8 @@ public class Path {
         name = "Path"+pathCount;
 
         radioButton.selectedProperty().addListener(e -> PathWindow.getInstance().setActivePath(this));
+        viewBox.setSelected(true);
+        viewBox.selectedProperty().addListener(e -> handleViewClick(viewBox.isSelected()));
 
         color = defaultColors.get(pathCount);
         if(color == null){
@@ -73,17 +80,17 @@ public class Path {
             Line l = createLine(c1,c2);
 
             lines.add(l);
-            grapics.getChildren().add(l);
+            graphics.getChildren().add(l);
         }
 
-        grapics.getChildren().add(wayPoint.getGraphic());
+        graphics.getChildren().add(wayPoint.getGraphic());
     }
 
     /**
      * @return An group of all graphical elements
      */
     public Group getGraphics() {
-        return grapics;
+        return graphics;
     }
 
     public Color getColor(){
@@ -94,6 +101,10 @@ public class Path {
         return radioButton;
     }
 
+    public CheckBox getViewBox() {
+        return viewBox;
+    }
+
     /**
      * Create line segment
      */
@@ -102,5 +113,9 @@ public class Path {
         l.setStroke(color);
 
         return l;
+    }
+
+    private void handleViewClick(boolean isSelected){
+            graphics.setVisible(isSelected);
     }
 }
