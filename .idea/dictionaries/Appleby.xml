@@ -2,8 +2,10 @@
   <dictionary name="Appleby">
     <words>
       <w>actuals</w>
+      <w>autopath</w>
       <w>nonprimitive</w>
       <w>solvability</w>
+      <w>todos</w>
     </words>
   </dictionary>
 </component>

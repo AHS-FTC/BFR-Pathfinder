@@ -1,0 +1,42 @@
+---- Alex's Dev Todos ----
+
+- Add show/hide checkbox next to paths
+    - Implement Show/Hide on path
+    - Make checkbox CSS
+
+- Create waypoint Selection
+    - Add 'selected' graphic to waypoint
+    - Filter clicks somehow
+
+- Add waypoint creation on ctrl+click
+    - Implement auto-heading on undetermined points
+    - Probably implement point direct point editing somehow
+
+- Implement direct-to-phone install
+    - Implement export path as CSV
+        - Implement path renaming to avoid ambiguity
+    - Implement import path from CSV
+        - Implement import with file-prompter finder thingy
+    - Get ADB up and running
+    - Figure out push and pull file commands
+    - Make windows/mac handling not shitty in ADBInterface
+
+- Implement path spline fitting
+    - Talk to Miles about spline code
+    - Create alternative graphics for spline-fit waypoints?
+    - Figure out how to fit spline-fit points into arraylist (consider LinkedList?)
+
+- Trace actual autopath
+    - ??????
+    - Miles help
+
+-- Nice to Haves --
+
+- Combine three 'primary' windows into one
+
+- Trace path with robot
+
+- Make a straighter render of the empty field that doesn't suck (without walls)
+
+- Get some kewl robot renders for the on-field bot
+    - 6929?
