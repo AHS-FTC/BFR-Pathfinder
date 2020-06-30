@@ -72,6 +72,22 @@ public class WayPoint {
         headingPointer.setHeading(heading);
     }
 
+    /**
+     * for ambiguous points, reassess pathfollowing heading after a point ahead of this one is added
+     */
+    public void reFollow(WayPoint wayPoint){
+        System.out.println(isAmbiguous());
+        System.out.println(heading);
+        if(isAmbiguous() && heading != null ){
+            double newIdealHeading = coordinate.angleTo(wayPoint.getCoordinate()); //todo fix pos/negative bug on this method with this implementation
+
+            //average of old and new heading is new heading
+            System.out.println(heading);
+            setHeading((heading + newIdealHeading)/2.0);
+            System.out.println(heading);
+        }
+    }
+
     public Double getHeading(){ //nonprimitive to hold ambiguous null value
         return heading;
     }

@@ -3,14 +3,14 @@ package edu.ahs.robotics.pathfinder.util;
 import edu.ahs.robotics.pathfinder.environment.Environment;
 import edu.ahs.robotics.pathfinder.path.Coordinate;
 import edu.ahs.robotics.pathfinder.ui.primary.PathWindow;
-import edu.ahs.robotics.pathfinder.ui.primary.Sidebar;
+import edu.ahs.robotics.pathfinder.ui.primary.SideBar;
 import javafx.application.Application;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class Main extends Application {
 
-    private Sidebar sidebar;
+    private SideBar sidebar;
     private Environment environment;
 
     @Override
@@ -21,7 +21,7 @@ public class Main extends Application {
 
         environment = new Environment(windowSize);
         PathWindow.init(environment);
-        sidebar = new Sidebar(windowSize, environment);
+        SideBar.init(windowSize, environment);
     }
 
 

@@ -86,6 +86,22 @@ public class Environment {
         PathWindow.getInstance().addPath(path);
     }
 
+    public void deletePath(Path path){
+        int i = paths.indexOf(path);
+        paths.remove(i);
+
+        //try to set another path as active
+        try{
+           PathWindow.getInstance().setActivePath(paths.get(i + 1));
+        } catch (IndexOutOfBoundsException e){
+            try {
+                PathWindow.getInstance().setActivePath(paths.get(i + 1));
+            } catch (IndexOutOfBoundsException e1){
+                PathWindow.getInstance().setActivePath(null);
+            }
+        }
+    }
+
     public ArrayList<Path> getPaths(){
         return paths;
     }

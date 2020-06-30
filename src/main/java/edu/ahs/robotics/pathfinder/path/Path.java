@@ -2,16 +2,13 @@ package edu.ahs.robotics.pathfinder.path;
 
 
 import edu.ahs.robotics.pathfinder.ui.primary.PathWindow;
-import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
+import edu.ahs.robotics.pathfinder.ui.primary.SideBar;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 
-import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -50,7 +47,7 @@ public class Path {
 
         radioButton.selectedProperty().addListener(e -> PathWindow.getInstance().setActivePath(this));
         viewBox.setSelected(true);
-        viewBox.selectedProperty().addListener(e -> handleViewClick(viewBox.isSelected()));
+        viewBox.selectedProperty().addListener(e -> graphics.setVisible(viewBox.isSelected()));
 
         color = defaultColors.get(pathCount);
         if(color == null){
@@ -65,8 +62,25 @@ public class Path {
     public void addWayPoint(WayPoint wayPoint) {
 
         //auto assign headings to ambiguous waypoints
+        //todo consider a refactor to make this algorithm clear? perhaps factor out method?
         if(wayPoint.getHeading() == null){
-            //do some shit
+            if(wayPoints.size() != 0){
+                WayPoint lastWayPoint = wayPoints.get(wayPoints.size() - 1);
+                double angle;
+                if(SideBar.getInstance().isFollow()){
+                    angle = lastWayPoint.getCoordinate().angleTo(wayPoint.getCoordinate());
+                    wayPoint.setHeading(angle);
+                    lastWayPoint.reFollow(wayPoint);
+                } else { //hold
+                    if(lastWayPoint.getHeading() != null) {
+                        angle = lastWayPoint.getHeading();
+                        wayPoint.setHeading(angle);
+                        if (!lastWayPoint.isAmbiguous()) {
+                            wayPoint.disambiguate();
+                        }
+                    }
+                }
+            }
         }
 
         wayPoints.add(wayPoint);
@@ -101,6 +115,12 @@ public class Path {
         return radioButton;
     }
 
+    public void enableRadioButton(){
+//        if(!radioButton.isSelected()){ //todo fix
+//            radioButton.setSelected(true);
+//        }
+    }
+
     public CheckBox getViewBox() {
         return viewBox;
     }
@@ -113,9 +133,5 @@ public class Path {
         l.setStroke(color);
 
         return l;
-    }
-
-    private void handleViewClick(boolean isSelected){
-            graphics.setVisible(isSelected);
     }
 }

@@ -70,7 +70,6 @@ public class HeadingPointer {
             arrow.getPoints().add(c.getPixelX());
             arrow.getPoints().add(c.getPixelY());
         }
-
     }
 
     public void setFill(Paint fill){

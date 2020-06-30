@@ -1,13 +1,13 @@
 ---- Alex's Dev Todos ----
 
+- Figure out path deletion with John
+
+- Fix Angle Wrap Bug on auto heading
+
 - Create waypoint Selection
     - Add 'selected' graphic to waypoint
     - Filter clicks somehow
-
-- Add waypoint creation on ctrl+click
-    - Implement auto-heading on undetermined points
-    - Probably implement point direct point editing somehow
-
+    
 - Implement direct-to-phone install
     - Implement export path as CSV
         - Implement path renaming to avoid ambiguity
@@ -27,6 +27,8 @@
     - Miles help
 
 -- Nice to Haves --
+
+- Find a way to manage key presses that actually works lmao
 
 - Combine three 'primary' windows into one
 

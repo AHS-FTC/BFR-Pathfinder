@@ -32,8 +32,12 @@
 .radio-button .dot{
   -fx-mark-color: forestgreen ;
   -fx-mark-highlight-color: #43b92b ;
-
 }
+
+.radio-button .text{
+    -fx-fill: white;
+}
+
 
 .check-box>.box {
   -fx-background-color: transparent;

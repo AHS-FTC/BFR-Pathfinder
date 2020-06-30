@@ -5,14 +5,19 @@ import edu.ahs.robotics.pathfinder.environment.Environment;
 import edu.ahs.robotics.pathfinder.environment.Robot;
 import edu.ahs.robotics.pathfinder.path.Path;
 import edu.ahs.robotics.pathfinder.path.WayPoint;
+import edu.ahs.robotics.pathfinder.ui.text.StandardText;
 import edu.ahs.robotics.pathfinder.ui.text.TitleText;
 import edu.ahs.robotics.pathfinder.ui.windows.NewWayPointWindow;
 import edu.ahs.robotics.pathfinder.ui.windows.SetPositionWindow;
+import javafx.application.Platform;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.Separator;
+import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -20,18 +25,24 @@ import javafx.stage.Stage;
  * UI sidebar to compliment main pathfinder window.
  * @author Alex Appleby, team 16896
  */
-public class Sidebar {
+public class SideBar {
 
     private Stage window;
     private Scene scene;
     private VBox verticalLayout;
+    private HBox pathHBox = new HBox(10);
+
+    boolean follow = true;
 
     private Environment environment;
     private PathWindow pathWindow;
 
-    public Sidebar(double fieldWindowSize, Environment environment) {
+    private static SideBar instance;
+
+    private SideBar(double fieldWindowSize, Environment environment) {
         window = new Stage();
         window.setTitle("BFR Pathfinder UI");
+        window.onCloseRequestProperty().setValue(e -> Platform.exit());
 
         this.environment = environment;
         this.pathWindow  = PathWindow.getInstance();
@@ -50,9 +61,15 @@ public class Sidebar {
         verticalLayout.getChildren().add(makeNewWayPointButton());
         verticalLayout.getChildren().add(makeSetPosAsWayPointButton());
 
+        verticalLayout.getChildren().add(new StandardText("Handle Ambiguous Heading via:"));
+        verticalLayout.getChildren().add(makeWayPointModes());
+
         verticalLayout.getChildren().add(new Separator(Orientation.HORIZONTAL));
 
-        verticalLayout.getChildren().add(makeNewPathButton());
+        pathHBox.getChildren().addAll(makeNewPathButton(), makeDeletePathButton());
+        pathHBox.setAlignment(Pos.CENTER);
+
+        verticalLayout.getChildren().add(pathHBox);
 
         scene = new Scene(verticalLayout,300, fieldWindowSize);
         scene.getStylesheets().add("ui/buck.css");
@@ -60,6 +77,20 @@ public class Sidebar {
         window.setX(0);
         window.setY(0);
         window.show();
+    }
+
+    public static void init(double fieldWindowSize, Environment environment){
+        if(instance == null) {
+            instance = new SideBar(fieldWindowSize, environment);
+        }
+    }
+
+    public static SideBar getInstance(){
+        return instance;
+    }
+
+    public boolean isFollow(){
+        return follow;
     }
 
     private Button makeSetPositionButton(){
@@ -82,9 +113,35 @@ public class Sidebar {
         return b;
     }
 
+    private HBox makeWayPointModes(){
+        HBox layout = new HBox(5);
+        layout.setAlignment(Pos.CENTER);
+
+        ToggleGroup toggleGroup = new ToggleGroup();
+        RadioButton followPath = new RadioButton("Follow");
+        RadioButton holdPath = new RadioButton("Hold");
+
+        followPath.setToggleGroup(toggleGroup);
+        holdPath.setToggleGroup(toggleGroup);
+
+        followPath.selectedProperty().addListener(e -> follow = true);
+        holdPath.selectedProperty().addListener(e -> follow = false);
+
+        followPath.setSelected(true);
+
+        layout.getChildren().addAll(followPath,holdPath);
+        return layout;
+    }
+
     private Button makeNewPathButton(){
         Button b = new Button("New Path");
         b.setOnAction(e -> environment.addPath(new Path()));
+        return b;
+    }
+
+    private Button makeDeletePathButton(){
+        Button b = new Button("Delete Path");
+        b.setOnAction(e -> environment.deletePath(pathWindow.getActivePath()));
         return b;
     }
 
