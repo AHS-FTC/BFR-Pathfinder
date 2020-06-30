@@ -84,6 +84,7 @@ public class Environment {
         paths.add(path);
         layout.getChildren().add(path.getGraphics());
         PathWindow.getInstance().addPath(path);
+        path.makeActivePath();
     }
 
     public void deletePath(Path path){

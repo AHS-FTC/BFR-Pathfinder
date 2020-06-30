@@ -75,9 +75,6 @@ public class PathWindow extends Window { //todo consider making major windows si
 
     public void setActivePath(Path path){
         activePath = path;
-        if(activePath != null){
-            path.enableRadioButton();
-        }
     }
 
     public static void init(Environment e){

@@ -115,10 +115,12 @@ public class Path {
         return radioButton;
     }
 
-    public void enableRadioButton(){
-//        if(!radioButton.isSelected()){ //todo fix
-//            radioButton.setSelected(true);
-//        }
+    /**
+     * Makes this path the active path, also properly updates the gui.
+     * Use this when possible over setActivePath()
+     */
+    public void makeActivePath(){
+        radioButton.fire(); //calls the lambda on the radio button
     }
 
     public CheckBox getViewBox() {
