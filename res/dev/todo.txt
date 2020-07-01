@@ -4,9 +4,7 @@
 
 - Fix Angle Wrap Bug on auto heading
 
-- Create waypoint Selection
-    - Add 'selected' graphic to waypoint
-    - Filter clicks somehow
+- Display WayPoint stats when selected (use DecimalFormat)
     
 - Implement direct-to-phone install
     - Implement export path as CSV

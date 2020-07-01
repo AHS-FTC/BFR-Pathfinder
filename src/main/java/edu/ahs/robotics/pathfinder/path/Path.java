@@ -30,7 +30,7 @@ public class Path {
     private static int pathCount = 0;
     public String name;
 
-    private static HashMap<Integer,Color> defaultColors = new HashMap();
+    private static final HashMap<Integer,Color> defaultColors = new HashMap<>();
 
     static {
         defaultColors.put(1, Color.rgb(253, 238, 0));

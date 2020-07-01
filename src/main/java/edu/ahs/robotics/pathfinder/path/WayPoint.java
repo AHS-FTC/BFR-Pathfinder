@@ -2,9 +2,14 @@ package edu.ahs.robotics.pathfinder.path;
 
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+
+import java.util.ArrayList;
 
 /**
  * A desired robot state on the field, as an element of an autonomous path.
@@ -22,15 +27,19 @@ public class WayPoint {
     private Double heading = null;  //see class javadoc
 
     private boolean ambiguous = true; //see constructors
+    private boolean selected = false;
 
     private Group group;
     private Text label;
     private Circle circle;
+    private Rectangle selectionBox;
     private HeadingPointer headingPointer;
 
     private int count;
     private static final double X_OFFSET = 4.0;
     private Color color = Color.WHITE;
+
+    private static ArrayList<WayPoint> selectedWayPoints = new ArrayList<>();
 
     /**
      * Determined heading constructor.
@@ -59,9 +68,13 @@ public class WayPoint {
         label.setFill(color);
 
         group = new Group();
-        headingPointer = new HeadingPointer(GRAPHIC_RADIUS, coordinate);
 
-        group.getChildren().addAll(headingPointer.getGraphics(), label);
+        group.addEventFilter(MouseEvent.MOUSE_CLICKED, this::onMouseClicked);
+
+        headingPointer = new HeadingPointer(GRAPHIC_RADIUS, coordinate);
+        selectionBox = makeSelectionBox();
+
+        group.getChildren().addAll(headingPointer.getGraphics(), label, selectionBox);
     }
 
     /**
@@ -108,6 +121,7 @@ public class WayPoint {
         circle.setFill(color);
         headingPointer.setFill(color);
         label.setFill(color);
+        selectionBox.setStroke(color);
     }
 
     /*protected*/ void setCount (int count){
@@ -121,5 +135,29 @@ public class WayPoint {
 
     public Coordinate getCoordinate() {
         return coordinate;
+    }
+
+    private Rectangle makeSelectionBox(){
+        Rectangle r = new Rectangle();
+        r.setWidth(GRAPHIC_RADIUS * 2);
+        r.setHeight(GRAPHIC_RADIUS * 2);
+        r.setX(coordinate.getPixelX() - (r.getWidth()/2.0));
+        r.setY(coordinate.getPixelY() - (r.getHeight()/2.0));
+        r.setFill(Color.TRANSPARENT);
+        r.setVisible(false);
+
+        return r;
+    }
+
+    private void onMouseClicked(MouseEvent e){
+        if(e.getButton() == MouseButton.PRIMARY){ //toggle selection
+            if(selected){
+                selectedWayPoints.remove(this);
+            } else {
+                selectedWayPoints.add(this);
+            }
+            selected = !selected;
+            selectionBox.setVisible(selected);
+        }
     }
 }

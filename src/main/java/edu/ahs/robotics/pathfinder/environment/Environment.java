@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -49,18 +50,19 @@ public class Environment {
 
     private void onMouseClick(MouseEvent e){
         if(e.getButton() == MouseButton.PRIMARY){
+            //presumably a Polygon or Circle and thus a waypoint, but there may be a better way to do this
+            if (!(e.getTarget() instanceof Shape)) { //if this is true, WayPoint handles the MouseEvent
+                if (KeyManager.isPressed(KeyCode.CONTROL)) {
 
-            if(KeyManager.isPressed(KeyCode.CONTROL)){
+                        Coordinate c = Coordinate.newFromPixels(e.getX(), e.getY());
 
-                Coordinate c = Coordinate.newFromPixels(e.getX(), e.getY());
+                        WayPoint w = new WayPoint(c);
+                        PathWindow.getInstance().getActivePath().addWayPoint(w);
 
-                WayPoint w = new WayPoint(c);
-                PathWindow.getInstance().getActivePath().addWayPoint(w);
-
-            } else {
-                robot.setPosition(Coordinate.newFromPixels(e.getX(),e.getY()));
+                    } else {
+                        robot.setPosition(Coordinate.newFromPixels(e.getX(), e.getY()));
+                    }
             }
-
         } else if (e.getButton() == MouseButton.SECONDARY){
             robot.pointTowards(Coordinate.newFromPixels(e.getX(), e.getY()));
         }
