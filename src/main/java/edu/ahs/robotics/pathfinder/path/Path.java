@@ -116,8 +116,6 @@ public class Path {
     /*protected for testing*/ static double calculateBestAngle(double rawAngle, double lastAngle){
         double retAngle;
         double angleDifference = lastAngle - rawAngle;
-        System.out.println("raw: "+rawAngle);
-        System.out.println("last angle: " + lastAngle);
 
         //make sure angleDifference isn't more than 2pi away from the last angle
         if (Math.abs(angleDifference) > 2 * Math.PI) {
@@ -134,7 +132,6 @@ public class Path {
         }
 
         retAngle = lastAngle - angleDifference;//derived from definition of angleDifference
-        System.out.println("retAngle:" + retAngle);
         return retAngle;
     }
 

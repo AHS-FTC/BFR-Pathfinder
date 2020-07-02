@@ -7,6 +7,7 @@ import edu.ahs.robotics.pathfinder.path.Coordinate;
 import edu.ahs.robotics.pathfinder.util.KeyManager;
 import javafx.application.Platform;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
@@ -21,8 +22,7 @@ import java.util.ArrayList;
  * @author Alex Appleby, team 16896
  */
 public class Environment {
-    private Stage window = new Stage();
-    private Scene scene;
+    //private Stage window = new Stage();
     private Group layout = new Group();
     private Field field;
     private Robot robot = new Robot();
@@ -34,18 +34,21 @@ public class Environment {
         layout.getChildren().add(field.getImageView());
         layout.getChildren().add(robot.getImageView());
 
-        scene = new Scene(layout,windowSize,windowSize);
-        window.setScene(scene);
-        window.setTitle("Black Forest Robotics Pathfinder");
-        window.onCloseRequestProperty().setValue(e -> Platform.exit());
+        layout.prefHeight(windowSize);
+        layout.prefWidth(windowSize);
 
-        scene.addEventFilter(MouseEvent.MOUSE_CLICKED, this::onMouseClick);
+//        window.setScene(scene);
+//        window.setTitle("Black Forest Robotics Pathfinder");
+//        window.onCloseRequestProperty().setValue(e -> Platform.exit());
 
-        scene.setOnKeyPressed(e -> KeyManager.setKeyStatus(e.getCode(), true));
-        scene.setOnKeyReleased(e -> KeyManager.setKeyStatus(e.getCode(), false));
+        layout.addEventFilter(MouseEvent.MOUSE_CLICKED, this::onMouseClick);
 
-        window.show();
-        lockWindow();
+        //window.show();
+        //lockWindow();
+    }
+
+    public Node getLayout(){
+        return layout;
     }
 
     private void onMouseClick(MouseEvent e){
@@ -68,15 +71,15 @@ public class Environment {
         }
     }
 
-    private void lockWindow() {
-        double height = window.getHeight();
-        double width = window.getWidth();
-
-        window.setMinHeight(height);
-        window.setMaxHeight(height);
-        window.setMinWidth(width);
-        window.setMaxWidth(width);
-    }
+//    private void lockWindow() {
+//        double height = window.getHeight();
+//        double width = window.getWidth();
+//
+//        window.setMinHeight(height);
+//        window.setMaxHeight(height);
+//        window.setMinWidth(width);
+//        window.setMaxWidth(width);
+//    }
 
     public Robot getRobot(){
         return robot;

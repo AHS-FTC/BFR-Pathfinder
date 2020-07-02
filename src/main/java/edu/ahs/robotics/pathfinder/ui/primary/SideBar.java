@@ -15,6 +15,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
@@ -31,8 +32,8 @@ import javafx.stage.Stage;
  */
 public class SideBar {
 
-    private Stage window;
-    private Scene scene;
+    //private Stage window;
+    //private Scene scene;
     private VBox verticalLayout;
     private HBox pathHBox = new HBox(10);
 
@@ -44,9 +45,9 @@ public class SideBar {
     private static SideBar instance;
 
     private SideBar(double fieldWindowSize, Environment environment) {
-        window = new Stage();
-        window.setTitle("BFR Pathfinder UI");
-        window.onCloseRequestProperty().setValue(e -> Platform.exit());
+//        window = new Stage();
+//        window.setTitle("BFR Pathfinder UI");
+//        window.onCloseRequestProperty().setValue(e -> Platform.exit());
 
         this.environment = environment;
         this.pathWindow  = PathWindow.getInstance();
@@ -77,12 +78,20 @@ public class SideBar {
 
         verticalLayout.getChildren().add(makeRenamePathButton());
 
-        scene = new Scene(verticalLayout,300, fieldWindowSize);
-        scene.getStylesheets().add("ui/buck.css");
-        window.setScene(scene);
-        window.setX(0);
-        window.setY(0);
-        window.show();
+        verticalLayout.getChildren().add(new Separator(Orientation.HORIZONTAL));
+
+        verticalLayout.getChildren().add(makeCloseButton());
+
+//        scene = new Scene(verticalLayout,300, fieldWindowSize);
+//        scene.getStylesheets().add("ui/buck.css");
+//        window.setScene(scene);
+//        window.setX(0);
+//        window.setY(0);
+//        window.show();
+    }
+
+    public Node getLayout(){
+        return verticalLayout;
     }
 
     public static void init(double fieldWindowSize, Environment environment){
@@ -155,6 +164,13 @@ public class SideBar {
         Button b = new Button("Rename Active Path");
         Path activePath = PathWindow.getInstance().getActivePath();
         b.setOnAction(e -> new TextEntryWindow("Rename Active Path", "New Name: ", activePath::rename));
+        return b;
+    }
+
+    private Button makeCloseButton(){
+        Button b = new Button("Close");
+        b.setOnAction(e -> Platform.exit());
+        b.getStyleClass().add("warning-button");
         return b;
     }
 

@@ -1,8 +1,11 @@
 package edu.ahs.robotics.pathfinder.ui.windows;
 
+import edu.ahs.robotics.pathfinder.ui.primary.MainApplication;
+import edu.ahs.robotics.pathfinder.ui.primary.PathWindow;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class Window {
     protected Stage stage;
@@ -12,6 +15,7 @@ public class Window {
 
     public Window(String title) {
         stage = new Stage();
+        stage.initOwner(MainApplication.getStage());
         stage.setTitle(title);
     }
 

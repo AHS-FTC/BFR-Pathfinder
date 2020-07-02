@@ -9,6 +9,7 @@ import edu.ahs.robotics.pathfinder.ui.windows.Window;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Separator;
 import javafx.scene.control.ToggleGroup;
@@ -21,7 +22,7 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
-public class PathWindow extends Window { //todo consider making major windows singletons in nature
+public class PathWindow{ //todo consider making major windows singletons in nature
 
     private static double COLOR_BOX_SIZE = 10; // in px
     private Environment environment;
@@ -30,13 +31,14 @@ public class PathWindow extends Window { //todo consider making major windows si
 
     private Path activePath = null;
     private ArrayList<Path> paths;
+    private Node layout;
 
     private ToggleGroup toggleGroup = new ToggleGroup();
 
     private static PathWindow instance = null;
 
     private PathWindow(Environment environment) {
-        super("Paths");
+        //super("Paths");
         this.environment = environment;
         //paths = environment.getPaths();
         Stage stage = new Stage();
@@ -53,9 +55,15 @@ public class PathWindow extends Window { //todo consider making major windows si
 
         vBox.getChildren().add(grid);
 
-        createScene(vBox);
+        //createScene(vBox);
 
         paths = environment.getPaths();
+
+        layout = vBox;
+    }
+
+    public Node getLayout(){
+        return layout;
     }
 
     public void addPath(Path path){
@@ -70,7 +78,7 @@ public class PathWindow extends Window { //todo consider making major windows si
         grid.add(activePathButton, 1, index);
         grid.add(text, 2, index);
         grid.add(colorBox, 3, index);
-        stage.sizeToScene();
+        //stage.sizeToScene();
     }
 
     public void setActivePath(Path path){
@@ -84,10 +92,10 @@ public class PathWindow extends Window { //todo consider making major windows si
         instance.environment.addPath(newPath);
         instance.activePath = newPath;
 
-        double x = Screen.getPrimary().getBounds().getMaxX() - instance.stage.getWidth();
-
-        instance.stage.setX(x);
-        instance.stage.setY(0);
+//        double x = Screen.getPrimary().getBounds().getMaxX() - instance.stage.getWidth();
+//
+//        instance.stage.setX(x);
+//        instance.stage.setY(0);
     }
 
     public static PathWindow getInstance(){

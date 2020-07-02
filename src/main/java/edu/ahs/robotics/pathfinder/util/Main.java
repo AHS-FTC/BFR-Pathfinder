@@ -2,6 +2,7 @@ package edu.ahs.robotics.pathfinder.util;
 
 import edu.ahs.robotics.pathfinder.environment.Environment;
 import edu.ahs.robotics.pathfinder.path.Coordinate;
+import edu.ahs.robotics.pathfinder.ui.primary.MainApplication;
 import edu.ahs.robotics.pathfinder.ui.primary.PathWindow;
 import edu.ahs.robotics.pathfinder.ui.primary.SideBar;
 import javafx.application.Application;
@@ -19,9 +20,11 @@ public class Main extends Application {
 
         Coordinate.initialize(windowSize);
 
-        environment = new Environment(windowSize);
-        PathWindow.init(environment);
-        SideBar.init(windowSize, environment);
+        MainApplication.init(windowSize);
+
+//        environment = new Environment(windowSize);
+//        PathWindow.init(environment);
+//        SideBar.init(windowSize, environment);
     }
 
 
