@@ -9,7 +9,10 @@ import edu.ahs.robotics.pathfinder.ui.text.StandardText;
 import edu.ahs.robotics.pathfinder.ui.text.TitleText;
 import edu.ahs.robotics.pathfinder.ui.windows.NewWayPointWindow;
 import edu.ahs.robotics.pathfinder.ui.windows.SetPositionWindow;
+import edu.ahs.robotics.pathfinder.ui.windows.TextEntryWindow;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -20,6 +23,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
 
 /**
  * UI sidebar to compliment main pathfinder window.
@@ -70,6 +74,8 @@ public class SideBar {
         pathHBox.setAlignment(Pos.CENTER);
 
         verticalLayout.getChildren().add(pathHBox);
+
+        verticalLayout.getChildren().add(makeRenamePathButton());
 
         scene = new Scene(verticalLayout,300, fieldWindowSize);
         scene.getStylesheets().add("ui/buck.css");
@@ -142,6 +148,12 @@ public class SideBar {
     private Button makeDeletePathButton(){
         Button b = new Button("Delete Path");
         b.setOnAction(e -> environment.deletePath(pathWindow.getActivePath()));
+        return b;
+    }
+
+    private Button  makeRenamePathButton(){
+        Button b = new Button("Rename Active Path");
+        b.setOnAction(e -> new TextEntryWindow("Rename Active Path", "New Name: ", PathWindow.getInstance().getActivePath()));
         return b;
     }
 

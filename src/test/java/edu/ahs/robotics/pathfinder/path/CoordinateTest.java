@@ -73,4 +73,9 @@ public class CoordinateTest {
         assertEquals(c.getPixelY(), 80, 0.00001);
 
     }
+
+    @Test
+    public void testModululs(){
+        System.out.println(6 % (Math.PI));
+    }
 }

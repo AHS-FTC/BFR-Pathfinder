@@ -61,7 +61,7 @@ public class PathWindow extends Window { //todo consider making major windows si
     public void addPath(Path path){
         int index = paths.size() - 1;//todo consider removing paths arraylist
 
-        Text text = new StandardText(path.name);
+        Text text = path.getPathText();
         Rectangle colorBox = new Rectangle(COLOR_BOX_SIZE, COLOR_BOX_SIZE, path.getColor());
         RadioButton activePathButton = path.getRadioButton();
         activePathButton.setToggleGroup(toggleGroup);

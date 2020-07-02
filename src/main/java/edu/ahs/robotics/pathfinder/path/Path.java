@@ -3,11 +3,13 @@ package edu.ahs.robotics.pathfinder.path;
 
 import edu.ahs.robotics.pathfinder.ui.primary.PathWindow;
 import edu.ahs.robotics.pathfinder.ui.primary.SideBar;
+import edu.ahs.robotics.pathfinder.ui.text.StandardText;
 import javafx.scene.Group;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,6 +28,7 @@ public class Path {
 
     private RadioButton radioButton = new RadioButton();
     private CheckBox viewBox = new CheckBox();
+    private Text pathText;
 
     private static int pathCount = 0;
     public String name;
@@ -44,6 +47,7 @@ public class Path {
     public Path() {
         pathCount++;
         name = "Path"+pathCount;
+        pathText = new StandardText(name);
 
         radioButton.selectedProperty().addListener(e -> PathWindow.getInstance().setActivePath(this));
         viewBox.setSelected(true);
@@ -62,25 +66,8 @@ public class Path {
     public void addWayPoint(WayPoint wayPoint) {
 
         //auto assign headings to ambiguous waypoints
-        //todo consider a refactor to make this algorithm clear? perhaps factor out method?
         if(wayPoint.getHeading() == null){
-            if(wayPoints.size() != 0){
-                WayPoint lastWayPoint = wayPoints.get(wayPoints.size() - 1);
-                double angle;
-                if(SideBar.getInstance().isFollow()){
-                    angle = lastWayPoint.getCoordinate().angleTo(wayPoint.getCoordinate());
-                    wayPoint.setHeading(angle);
-                    lastWayPoint.reFollow(wayPoint);
-                } else { //hold
-                    if(lastWayPoint.getHeading() != null) {
-                        angle = lastWayPoint.getHeading();
-                        wayPoint.setHeading(angle);
-                        if (!lastWayPoint.isAmbiguous()) {
-                            wayPoint.disambiguate();
-                        }
-                    }
-                }
-            }
+            determineHeading(wayPoint);
         }
 
         wayPoints.add(wayPoint);
@@ -100,6 +87,57 @@ public class Path {
         graphics.getChildren().add(wayPoint.getGraphic());
     }
 
+    private void determineHeading(WayPoint wayPoint) {
+        if(wayPoints.size() != 0){
+            WayPoint lastWayPoint = wayPoints.get(wayPoints.size() - 1);
+            double angle;
+            if(SideBar.getInstance().isFollow()){
+                angle = lastWayPoint.getCoordinate().angleTo(wayPoint.getCoordinate());
+
+                if(lastWayPoint.getHeading() != null) {
+                    angle = calculateBestAngle(angle, lastWayPoint.getHeading());
+                }
+
+                wayPoint.setHeading(angle);
+                lastWayPoint.reFollow(wayPoint, angle);
+
+            } else { //hold
+                if(lastWayPoint.getHeading() != null) {
+                    angle = lastWayPoint.getHeading();
+                    wayPoint.setHeading(angle);
+                    if (!lastWayPoint.isAmbiguous()) {
+                        wayPoint.disambiguate();
+                    }
+                }
+            }
+        }
+    }
+
+    /*protected for testing*/ static double calculateBestAngle(double rawAngle, double lastAngle){
+        double retAngle;
+        double angleDifference = lastAngle - rawAngle;
+        System.out.println("raw: "+rawAngle);
+        System.out.println("last angle: " + lastAngle);
+
+        //make sure angleDifference isn't more than 2pi away from the last angle
+        if (Math.abs(angleDifference) > 2 * Math.PI) {
+            angleDifference  %= (2 * Math.PI);
+        }
+
+        // Make sure we have the most 'efficient' relative angleDistance
+        if (Math.abs(angleDifference) > Math.PI) {
+            if (Math.signum(angleDifference) == 1) {
+                angleDifference = (2 * Math.PI) - angleDifference;
+            } else {
+                angleDifference =  angleDifference + (2 * Math.PI);
+            }
+        }
+
+        retAngle = lastAngle - angleDifference;//derived from definition of angleDifference
+        System.out.println("retAngle:" + retAngle);
+        return retAngle;
+    }
+
     /**
      * @return An group of all graphical elements
      */
@@ -109,6 +147,16 @@ public class Path {
 
     public Color getColor(){
         return color;
+    }
+
+    public void rename(String s){
+        name = s;
+        name = name.replace(" ", "_");
+        pathText.setText(name);
+    }
+
+    public Text getPathText(){
+        return pathText;
     }
 
     public RadioButton getRadioButton(){
