@@ -3,6 +3,7 @@ package edu.ahs.robotics.pathfinder.ui.primary;
 import edu.ahs.robotics.pathfinder.environment.Environment;
 import edu.ahs.robotics.pathfinder.util.KeyManager;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -42,6 +43,8 @@ public class MainApplication {
 
         scene.setOnKeyPressed(e -> KeyManager.setKeyStatus(e.getCode(), true));
         scene.setOnKeyReleased(e -> KeyManager.setKeyStatus(e.getCode(), false));
+
+        stage.getIcons().add(new Image(MainApplication.class.getResourceAsStream("/ui/b.png")));
     }
 
     public static void init(double windowSize){
