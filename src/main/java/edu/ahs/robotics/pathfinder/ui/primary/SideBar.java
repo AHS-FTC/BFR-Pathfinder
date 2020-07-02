@@ -153,7 +153,8 @@ public class SideBar {
 
     private Button  makeRenamePathButton(){
         Button b = new Button("Rename Active Path");
-        b.setOnAction(e -> new TextEntryWindow("Rename Active Path", "New Name: ", PathWindow.getInstance().getActivePath()));
+        Path activePath = PathWindow.getInstance().getActivePath();
+        b.setOnAction(e -> new TextEntryWindow("Rename Active Path", "New Name: ", activePath::rename));
         return b;
     }
 
