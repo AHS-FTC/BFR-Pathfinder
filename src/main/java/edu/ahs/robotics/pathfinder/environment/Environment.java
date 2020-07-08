@@ -28,7 +28,9 @@ public class Environment {
     private Robot robot = new Robot();
     private ArrayList<Path> paths = new ArrayList();
 
-    public Environment(double windowSize) {
+    private static Environment instance;
+
+    private Environment(double windowSize) {
         field = new Field(windowSize);
 
         layout.getChildren().add(field.getImageView());
@@ -45,6 +47,16 @@ public class Environment {
 
         //window.show();
         //lockWindow();
+    }
+
+    public static void init(double windowSize){
+        if(instance == null){
+            instance = new Environment(windowSize);
+        }
+    }
+
+    public static Environment getInstance(){
+        return instance;
     }
 
     public Node getLayout(){
@@ -70,16 +82,6 @@ public class Environment {
             robot.pointTowards(Coordinate.newFromPixels(e.getX(), e.getY()));
         }
     }
-
-//    private void lockWindow() {
-//        double height = window.getHeight();
-//        double width = window.getWidth();
-//
-//        window.setMinHeight(height);
-//        window.setMaxHeight(height);
-//        window.setMinWidth(width);
-//        window.setMaxWidth(width);
-//    }
 
     public Robot getRobot(){
         return robot;

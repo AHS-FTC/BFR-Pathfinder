@@ -18,10 +18,11 @@ public class MainApplication {
     private BorderPane layout = new BorderPane();
 
     private MainApplication(double windowSize) {
-        environment = new Environment(windowSize);
-        PathWindow.init(environment);
-        SideBar.init(windowSize, environment);
+        Environment.init(windowSize);
+        PathWindow.init();
+        SideBar.init();
 
+        environment = Environment.getInstance();
         pathWindow = PathWindow.getInstance();
         sideBar = SideBar.getInstance();
 

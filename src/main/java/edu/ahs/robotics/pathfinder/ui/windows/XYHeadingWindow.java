@@ -1,5 +1,6 @@
 package edu.ahs.robotics.pathfinder.ui.windows;
 
+import edu.ahs.robotics.pathfinder.ui.primary.MainApplication;
 import edu.ahs.robotics.pathfinder.ui.text.StandardText;
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
@@ -68,13 +69,10 @@ public abstract class XYHeadingWindow extends Window {
         apply(x_,y_,heading_);
 
         } catch (NumberFormatException e){
-            Alert error = new Alert(Alert.AlertType.ERROR);
-            error.setHeaderText("NumberFormatException");
-            error.setContentText("A text field couldn't be converted to a number.");
-            error.showAndWait();
+            ErrorAlert.throwErrorWindow("NumberFormatException", "A text field couldn't be converted to a number.");
         }
     }
-
+    
     public abstract void apply(double x, double y, double heading);
 
     /**

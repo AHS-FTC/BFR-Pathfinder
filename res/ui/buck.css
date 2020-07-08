@@ -69,3 +69,11 @@ Eye by Sudhakar from the Noun Project
   -fx-background-color: transparent;
   -fx-background-image: url("closed_eye.png");
 }
+
+.dialog-pane .label {
+    -fx-text-fill: white;
+}
+
+.dialog-pane .header-panel{
+    -fx-background-color: crimson;
+}

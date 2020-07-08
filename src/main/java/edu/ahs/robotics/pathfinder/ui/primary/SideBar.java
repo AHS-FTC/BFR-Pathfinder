@@ -44,12 +44,9 @@ public class SideBar {
 
     private static SideBar instance;
 
-    private SideBar(double fieldWindowSize, Environment environment) {
-//        window = new Stage();
-//        window.setTitle("BFR Pathfinder UI");
-//        window.onCloseRequestProperty().setValue(e -> Platform.exit());
+    private SideBar() {
 
-        this.environment = environment;
+        environment = Environment.getInstance();
         this.pathWindow  = PathWindow.getInstance();
 
         verticalLayout = new VBox(10);
@@ -81,22 +78,15 @@ public class SideBar {
         verticalLayout.getChildren().add(new Separator(Orientation.HORIZONTAL));
 
         verticalLayout.getChildren().add(makeCloseButton());
-
-//        scene = new Scene(verticalLayout,300, fieldWindowSize);
-//        scene.getStylesheets().add("ui/buck.css");
-//        window.setScene(scene);
-//        window.setX(0);
-//        window.setY(0);
-//        window.show();
     }
 
     public Node getLayout(){
         return verticalLayout;
     }
 
-    public static void init(double fieldWindowSize, Environment environment){
+    public static void init(){
         if(instance == null) {
-            instance = new SideBar(fieldWindowSize, environment);
+            instance = new SideBar();
         }
     }
 

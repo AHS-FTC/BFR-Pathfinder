@@ -2,8 +2,6 @@
 
 - Figure out path deletion with John
 
-- Fix Angle Wrap Bug on auto heading
-
 - Display WayPoint stats when selected (use DecimalFormat)
     
 - Implement direct-to-phone install
@@ -27,8 +25,6 @@
 -- Nice to Haves --
 
 - Find a way to manage key presses that actually works lmao
-
-- Combine three 'primary' windows into one
 
 - Trace path with robot
 
