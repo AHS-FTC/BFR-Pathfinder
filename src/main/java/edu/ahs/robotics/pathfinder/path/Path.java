@@ -172,6 +172,10 @@ public class Path {
         return viewBox;
     }
 
+    public ArrayList<WayPoint> getWayPoints(){
+        return wayPoints;
+    }
+
     /**
      * Create line segment
      */
