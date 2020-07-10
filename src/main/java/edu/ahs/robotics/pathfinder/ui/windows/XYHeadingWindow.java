@@ -60,12 +60,12 @@ public abstract class XYHeadingWindow extends Window {
      * Also converts heading to radians.
      */
     private void apply(String x, String y, String heading){
-        try{
-        double x_ = Double.valueOf(x);
-        double y_ = Double.valueOf(y);
-        double heading_ = Math.toRadians(Double.valueOf(heading));
+        try {
+            double x_ = Double.valueOf(x);
+            double y_ = Double.valueOf(y);
+            double heading_ = Math.toRadians(Double.valueOf(heading));
 
-        apply(x_,y_,heading_);
+            apply(x_,y_,heading_);
 
         } catch (NumberFormatException e){
             Alert error = new Alert(Alert.AlertType.ERROR);

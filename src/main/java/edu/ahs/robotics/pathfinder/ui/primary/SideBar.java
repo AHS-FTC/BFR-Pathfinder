@@ -57,7 +57,9 @@ public class SideBar {
 
         verticalLayout.getChildren().add(new TitleText("BFR Pathfinder UI"));
 
-        verticalLayout.getChildren().add(new Separator(Orientation.HORIZONTAL));
+        Separator topSeparator = new Separator(Orientation.HORIZONTAL);
+        
+        verticalLayout.getChildren().add(topSeparator);
 
         verticalLayout.getChildren().add(makeSetPositionButton());
 

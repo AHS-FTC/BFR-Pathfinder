@@ -26,9 +26,10 @@ public class Environment {
     private Group layout = new Group();
     private Field field;
     private Robot robot = new Robot();
-    private ArrayList<Path> paths = new ArrayList();
+    private ArrayList<Path> paths = new ArrayList<>();
 
     public Environment(double windowSize) {
+
         field = new Field(windowSize);
 
         layout.getChildren().add(field.getImageView());
