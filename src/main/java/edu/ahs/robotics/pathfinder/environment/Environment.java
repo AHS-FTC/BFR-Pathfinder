@@ -67,6 +67,7 @@ public class Environment {
         if(e.getButton() == MouseButton.PRIMARY){
             //presumably a Polygon or Circle and thus a waypoint, but there may be a better way to do this
             if (!(e.getTarget() instanceof Shape)) { //if this is true, WayPoint handles the MouseEvent
+                WayPoint.deselectAll();
                 if (KeyManager.isPressed(KeyCode.CONTROL)) {
 
                         Coordinate c = Coordinate.newFromPixels(e.getX(), e.getY());

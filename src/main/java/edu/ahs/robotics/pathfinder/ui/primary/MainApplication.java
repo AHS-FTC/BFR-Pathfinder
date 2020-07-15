@@ -1,11 +1,15 @@
 package edu.ahs.robotics.pathfinder.ui.primary;
 
 import edu.ahs.robotics.pathfinder.environment.Environment;
+import edu.ahs.robotics.pathfinder.path.Coordinate;
+import edu.ahs.robotics.pathfinder.path.WayPoint;
 import edu.ahs.robotics.pathfinder.util.KeyManager;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
 
 public class MainApplication {
     private static MainApplication instance;
@@ -42,10 +46,31 @@ public class MainApplication {
         stage.show();
         stage.setFullScreen(true);
 
-        scene.setOnKeyPressed(e -> KeyManager.setKeyStatus(e.getCode(), true));
+        scene.setOnKeyPressed(e -> {
+            KeyManager.setKeyStatus(e.getCode(), true);
+            switch (e.getCode()){
+                case A:
+                    scootWayPoints(-1, 0);
+                    break;
+                case D:
+                    scootWayPoints(1, 0);
+                    break;
+                case W:
+                    scootWayPoints(0, 1);
+                    break;
+                case S:
+                    scootWayPoints(0, -1);
+                    break;
+            }
+        });
         scene.setOnKeyReleased(e -> KeyManager.setKeyStatus(e.getCode(), false));
 
         stage.getIcons().add(new Image(MainApplication.class.getResourceAsStream("/ui/b.png")));
+    }
+
+    private void scootWayPoints(double xIns, double yIns){
+        ArrayList<WayPoint> wayPoints = WayPoint.getSelectedWayPoints();
+        wayPoints.forEach(wayPoint -> wayPoint.scoot(xIns,yIns));
     }
 
     public static void init(double windowSize){
@@ -55,6 +80,7 @@ public class MainApplication {
     }
 
     public static Stage getStage(){
+        if(instance == null) return null;
         return instance.stage;
     }
 }

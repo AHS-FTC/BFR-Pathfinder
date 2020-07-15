@@ -68,6 +68,30 @@ public class Coordinate {
         return pixelY;
     }
 
+    public void setInchX(double inchX){
+        this.inchX = inchX;
+        if(pixelX != null)
+            calculatePixels();
+    }
+
+    public void setInchY(double inchY){
+        this.inchY = inchY;
+        if(pixelY != null)
+            calculatePixels();
+    }
+
+    public void setPixelX(double pixelX){
+        this.pixelX = pixelX;
+        if(inchX != null)
+            calculateInches();
+    }
+
+    public void setPixelY(double pixelY){
+        this.pixelY = pixelY;
+        if(inchY != null)
+            calculateInches();
+    }
+
     /**
      * Finds inch coordinates given pixel coordinates
      */
@@ -137,12 +161,12 @@ public class Coordinate {
         boolean pixelsAreEqual = false;
 
         if (inchX != null && inchY != null){ //don't run this check if inches aren't defined
-            if(inchX == c.inchX && inchY == c.inchY){
+            if(inchX.equals(inchX) && inchY.equals(c.inchY)){
                 inchesAreEqual = true;
             }
         }
         if (pixelX != null && pixelY != null){ //don't run this check if inches aren't defined
-            if(pixelX == c.pixelX && pixelY == c.pixelY){
+            if(pixelX.equals(c.pixelX) && pixelY.equals(c.pixelY)){
                 pixelsAreEqual = true;
             }
         }

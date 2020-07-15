@@ -77,3 +77,23 @@ Eye by Sudhakar from the Noun Project
 .dialog-pane .header-panel{
     -fx-background-color: crimson;
 }
+
+.slider {
+    -fx-show-tick-labels: true;
+    -fx-pref-width: 300px;
+    -path-color: blue;
+}
+
+.slider .axis{
+    -fx-tick-label-fill: white;
+}
+
+.slider .thumb {
+    -fx-background-color: -path-color;
+    -fx-pref-height: 8px;
+    -fx-pref-width: 8px;
+}
+
+.slider .track{
+    -fx-background-color: transparent;
+}

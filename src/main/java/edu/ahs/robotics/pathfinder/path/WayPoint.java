@@ -2,14 +2,17 @@ package edu.ahs.robotics.pathfinder.path;
 
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.control.Slider;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * A desired robot state on the field, as an element of an autonomous path.
@@ -19,7 +22,6 @@ import java.util.ArrayList;
  * A null heading prevents bugs by handing over a null pointer instead of an arbitrary value.
  */
 public class WayPoint {
-
     private static final double GRAPHIC_RADIUS = 6;
 
     private Coordinate coordinate;
@@ -28,6 +30,9 @@ public class WayPoint {
 
     private boolean ambiguous = true; //see constructors
     private boolean selected = false;
+
+    //the lines connecting to the previous and next waypoints respectively
+    private Line prevLine, nextLine;
 
     private Group group;
     private Text label;
@@ -38,6 +43,7 @@ public class WayPoint {
     private int count;
     private static final double X_OFFSET = 4.0;
     private Color color = Color.WHITE;
+    private Slider slider = new Slider(0, 1, 0);
 
     private static ArrayList<WayPoint> selectedWayPoints = new ArrayList<>();
 
@@ -58,13 +64,12 @@ public class WayPoint {
     public WayPoint(Coordinate coordinate){
         this.coordinate = coordinate;
 
-        circle = new Circle(coordinate.getPixelX(), coordinate.getPixelY(), GRAPHIC_RADIUS);
+        circle = new Circle(GRAPHIC_RADIUS);
         circle.setFill(color);
 
         label = new Text(String.valueOf(count));
 
-        label.setX(coordinate.getPixelX() + X_OFFSET);
-        label.setY(coordinate.getPixelY());
+
         label.setFill(color);
 
         group = new Group();
@@ -72,7 +77,10 @@ public class WayPoint {
         group.addEventFilter(MouseEvent.MOUSE_CLICKED, this::onMouseClicked);
 
         headingPointer = new HeadingPointer(GRAPHIC_RADIUS, coordinate);
-        selectionBox = makeSelectionBox();
+
+        makeSelectionBox();
+
+        renderPosition();
 
         group.getChildren().addAll(headingPointer.getGraphics(), label, selectionBox);
     }
@@ -83,6 +91,14 @@ public class WayPoint {
     public void setHeading(double heading){ // setter enforces heading primitivism
         this.heading = heading;
         headingPointer.setHeading(heading);
+    }
+
+    public void setPrevLine(Line previous){
+        prevLine = previous;
+    }
+
+    public void setNextLine(Line next){
+        nextLine = next;
     }
 
     /**
@@ -101,6 +117,10 @@ public class WayPoint {
         return heading;
     }
 
+    public Slider getSlider(){
+        return slider;
+    }
+
     public boolean isAmbiguous(){
         return ambiguous;
     }
@@ -114,6 +134,19 @@ public class WayPoint {
             throw new UnsupportedOperationException("Tried to disambiguate a point with a null heading");
         }
         ambiguous = false;
+    }
+
+    /**
+     * Nudges the current xy position of the WayPoint
+     */
+    public void scoot(double xIns, double yIns){
+        double x = coordinate.getInchX();
+        double y = coordinate.getInchY();
+
+        coordinate.setInchX(x + xIns);
+        coordinate.setInchY(y + yIns);
+
+        renderPosition();
     }
 
     /*protected*/ void setColor(Color color){ //only use in path package
@@ -137,27 +170,91 @@ public class WayPoint {
         return coordinate;
     }
 
-    private Rectangle makeSelectionBox(){
-        Rectangle r = new Rectangle();
-        r.setWidth(GRAPHIC_RADIUS * 2);
-        r.setHeight(GRAPHIC_RADIUS * 2);
-        r.setX(coordinate.getPixelX() - (r.getWidth()/2.0));
-        r.setY(coordinate.getPixelY() - (r.getHeight()/2.0));
-        r.setFill(Color.TRANSPARENT);
-        r.setVisible(false);
+    public static void deselectAll(){
+        for (WayPoint wp : selectedWayPoints) {
+            wp.selectionBox.setVisible(false);
+            wp.selected = false;
+        }
+        selectedWayPoints.clear();
+    }
 
-        return r;
+    public static ArrayList<WayPoint> getSelectedWayPoints(){
+        return selectedWayPoints;
+    }
+
+    private void makeSelectionBox(){
+        selectionBox = new Rectangle();
+        selectionBox.setWidth(GRAPHIC_RADIUS * 2);
+        selectionBox.setHeight(GRAPHIC_RADIUS * 2);
+        setBoxCorners();
+        selectionBox.setFill(Color.TRANSPARENT);
+        selectionBox.setVisible(false);
+    }
+
+    private void setBoxCorners(){
+        selectionBox.setX(coordinate.getPixelX() - (selectionBox.getWidth()/2.0));
+        selectionBox.setY(coordinate.getPixelY() - (selectionBox.getHeight()/2.0));
     }
 
     private void onMouseClicked(MouseEvent e){
         if(e.getButton() == MouseButton.PRIMARY){ //toggle selection
-            if(selected){
-                selectedWayPoints.remove(this);
-            } else {
-                selectedWayPoints.add(this);
-            }
-            selected = !selected;
-            selectionBox.setVisible(selected);
+            setSelected(!selected);
         }
     }
+
+    public void setSelected(boolean selected){
+        this.selected = selected;
+        if(selected){
+            selectedWayPoints.add(this);
+        } else {
+            selectedWayPoints.remove(this);
+        }
+        selectionBox.setVisible(selected);
+    }
+
+    private void renderPosition(){
+        double y = coordinate.getPixelY();
+        double x = coordinate.getPixelX();
+
+        label.setX(x + X_OFFSET);
+        label.setY(y);
+
+        circle.setCenterX(x);
+        circle.setCenterY(y);
+
+        setBoxCorners();
+
+        if(prevLine != null){
+            prevLine.setEndX(x);
+            prevLine.setEndY(y);
+        }
+
+        if(nextLine != null){
+            nextLine.setStartX(x);
+            nextLine.setStartY(y);
+        }
+
+        headingPointer.setPosition(coordinate);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        WayPoint wayPoint = (WayPoint) o;
+
+        if (ambiguous != wayPoint.ambiguous) return false;
+        if (!coordinate.equals(wayPoint.coordinate)) return false;
+        return Objects.equals(heading, wayPoint.heading);
+    }
+
+//    @Override
+//    public int hashCode() {
+//        int result = coordinate.hashCode();
+//        result = 31 * result + (heading != null ? heading.hashCode() : 0);
+//        result = 31 * result + (ambiguous ? 1 : 0);
+//        return result;
+//    }
+
 }

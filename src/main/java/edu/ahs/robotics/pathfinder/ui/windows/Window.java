@@ -15,8 +15,12 @@ public class Window {
 
     public Window(String title) {
         stage = new Stage();
-        stage.initOwner(MainApplication.getStage());
         stage.setTitle(title);
+
+        Stage mainStage = MainApplication.getStage();
+        if(mainStage != null){
+            stage.initOwner(mainStage);
+        }
     }
 
     /**

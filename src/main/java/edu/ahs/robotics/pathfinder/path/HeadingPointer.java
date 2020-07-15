@@ -16,9 +16,11 @@ public class HeadingPointer {
     private Polygon arrow = new Polygon();
     private Circle circleGraphic;
     private Group group = new Group();
+    private Coordinate coordinate;
 
     public HeadingPointer(double radius, Coordinate coordinate) {
         super();
+        this.coordinate = coordinate;
         boundingCircle = new MathCircle(coordinate.getPixelX(), coordinate.getPixelY(), radius);
         circleGraphic = new Circle(coordinate.getPixelX(), coordinate.getPixelY(), radius);
         group.getChildren().addAll(arrow, circleGraphic);
@@ -85,6 +87,23 @@ public class HeadingPointer {
 
         this.heading = heading;
         calculateVertices();
+    }
+
+    public void setPosition(Coordinate coordinate){
+        this.coordinate = coordinate;
+
+        double x  = coordinate.getPixelX();
+        double y  = coordinate.getPixelY();
+
+        boundingCircle.x = x;
+        boundingCircle.y = y;
+
+        circleGraphic.setCenterX(x);
+        circleGraphic.setCenterY(y);
+
+        if(!isAmbiguous()){
+            calculateVertices();
+        }
     }
 
     public Node getGraphics(){

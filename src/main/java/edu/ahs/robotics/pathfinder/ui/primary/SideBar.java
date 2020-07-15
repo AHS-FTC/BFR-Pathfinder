@@ -8,6 +8,7 @@ import edu.ahs.robotics.pathfinder.path.WayPoint;
 import edu.ahs.robotics.pathfinder.ui.text.StandardText;
 import edu.ahs.robotics.pathfinder.ui.text.TitleText;
 import edu.ahs.robotics.pathfinder.ui.windows.NewWayPointWindow;
+import edu.ahs.robotics.pathfinder.ui.windows.PowerWindow;
 import edu.ahs.robotics.pathfinder.ui.windows.SetPositionWindow;
 import edu.ahs.robotics.pathfinder.ui.windows.TextEntryWindow;
 import javafx.application.Platform;
@@ -76,6 +77,8 @@ public class SideBar {
         verticalLayout.getChildren().add(pathHBox);
 
         verticalLayout.getChildren().add(makeRenamePathButton());
+
+        verticalLayout.getChildren().add(makeEditPowerButton());
 
         verticalLayout.getChildren().add(new Separator(Orientation.HORIZONTAL));
 
@@ -149,6 +152,12 @@ public class SideBar {
     private Button makeDeletePathButton(){
         Button b = new Button("Delete Path");
         b.setOnAction(e -> environment.deletePath(pathWindow.getActivePath()));
+        return b;
+    }
+
+    private Button makeEditPowerButton(){
+        Button b = new Button("Edit Power");
+        b.setOnAction(e -> new PowerWindow());
         return b;
     }
 
