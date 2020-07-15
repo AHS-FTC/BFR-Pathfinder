@@ -47,7 +47,9 @@ public class Path {
     public Path() {
         pathCount++;
         name = "Path"+pathCount;
+
         pathText = new StandardText(name);
+        pathText.setOnMouseClicked(e -> onClick());
 
         radioButton.selectedProperty().addListener(e -> PathWindow.getInstance().setActivePath(this));
         viewBox.setSelected(true);
@@ -76,9 +78,16 @@ public class Path {
 
         if (wayPoints.size() > 1) {
             int newestPointIndex = wayPoints.size() - 1;
-            Coordinate c1 = wayPoints.get(newestPointIndex).getCoordinate();
-            Coordinate c2 = wayPoints.get(newestPointIndex - 1).getCoordinate();
+
+            WayPoint newestWayPoint = wayPoints.get(newestPointIndex);
+            WayPoint previousWayPoint = wayPoints.get(newestPointIndex - 1);
+
+            Coordinate c1 = newestWayPoint.getCoordinate();
+            Coordinate c2 = previousWayPoint.getCoordinate();
             Line l = createLine(c1,c2);
+
+            newestWayPoint.setPrevLine(l);
+            previousWayPoint.setNextLine(l);
 
             lines.add(l);
             graphics.getChildren().add(l);
@@ -156,6 +165,10 @@ public class Path {
         return pathText;
     }
 
+    private void onClick(){
+        wayPoints.forEach(wayPoint -> wayPoint.setSelected(true));
+    }
+
     public RadioButton getRadioButton(){
         return radioButton;
     }
@@ -180,7 +193,7 @@ public class Path {
      * Create line segment
      */
     private Line createLine(Coordinate c1, Coordinate c2) {
-        Line l = new Line(c1.getPixelX(), c1.getPixelY(), c2.getPixelX(), c2.getPixelY());
+        Line l = new Line(c2.getPixelX(), c2.getPixelY(), c1.getPixelX(), c1.getPixelY());
         l.setStroke(color);
 
         return l;
