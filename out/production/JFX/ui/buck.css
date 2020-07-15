@@ -81,7 +81,7 @@ Eye by Sudhakar from the Noun Project
 .slider {
     -fx-show-tick-labels: true;
     -fx-pref-width: 300px;
-    -fx-path-color: blue;
+    -path-color: blue;
 }
 
 .slider .axis{
@@ -89,9 +89,9 @@ Eye by Sudhakar from the Noun Project
 }
 
 .slider .thumb {
-    -fx-background-color: -fx-path-color;
-    -fx-pref-height: 10px;
-    -fx-pref-width: 10px;
+    -fx-background-color: -path-color;
+    -fx-pref-height: 8px;
+    -fx-pref-width: 8px;
 }
 
 .slider .track{

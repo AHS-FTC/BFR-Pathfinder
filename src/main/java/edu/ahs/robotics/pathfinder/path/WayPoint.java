@@ -2,6 +2,7 @@ package edu.ahs.robotics.pathfinder.path;
 
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.control.Slider;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -42,6 +43,7 @@ public class WayPoint {
     private int count;
     private static final double X_OFFSET = 4.0;
     private Color color = Color.WHITE;
+    private Slider slider = new Slider(0, 1, 0);
 
     private static ArrayList<WayPoint> selectedWayPoints = new ArrayList<>();
 
@@ -113,6 +115,10 @@ public class WayPoint {
 
     public Double getHeading(){ //nonprimitive to hold ambiguous null value
         return heading;
+    }
+
+    public Slider getSlider(){
+        return slider;
     }
 
     public boolean isAmbiguous(){
