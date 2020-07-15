@@ -80,6 +80,7 @@ public class MainApplication {
     }
 
     public static Stage getStage(){
+        if(instance == null) return null;
         return instance.stage;
     }
 }
