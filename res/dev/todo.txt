@@ -3,10 +3,20 @@
 - Figure out path deletion with John
 
 - Display WayPoint stats when selected (use DecimalFormat)
-    
+
+- Make Draggable Waypoints
+    - And also something for heading
+
+- Add ambiguous heading option
+
+- Add Power Control
+    - Make binded slider/text field
+    - Make draggable visual to display motor power (graph?)
+
 - Implement direct-to-phone install
     - Implement export path as CSV
         - Implement path renaming to avoid ambiguity
+        - Define different output formats
     - Implement import path from CSV
         - Implement import with file-prompter finder thingy
     - Get ADB up and running
@@ -19,6 +29,7 @@
     - Figure out how to fit spline-fit points into arraylist (consider LinkedList?)
 
 - Trace actual autopath
+    - https://www.geeksforgeeks.org/working-udp-datagramsockets-java/amp/
     - ??????
     - Miles help
 
