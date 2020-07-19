@@ -1,6 +1,12 @@
 package edu.ahs.robotics.pathfinder.path;
 
 
+import edu.ahs.robotics.pathfinder.path.geometry.Pose2d;
+import edu.ahs.robotics.pathfinder.path.geometry.Rotation2d;
+import edu.ahs.robotics.pathfinder.path.geometry.Translation2d;
+import edu.ahs.robotics.pathfinder.path.spline.GeometricPath;
+import edu.ahs.robotics.pathfinder.path.spline.PathPoint;
+import edu.ahs.robotics.pathfinder.path.spline.SplinePath;
 import edu.ahs.robotics.pathfinder.ui.primary.PathWindow;
 import edu.ahs.robotics.pathfinder.ui.primary.SideBar;
 import edu.ahs.robotics.pathfinder.ui.text.StandardText;
@@ -159,6 +165,30 @@ public class Path {
         name = s;
         name = name.replace(" ", "_");
         pathText.setText(name);
+    }
+
+    public void interpolate(){
+        ArrayList<Pose2d> splinePoints = new ArrayList<>();
+
+        for (WayPoint wayPoint : wayPoints) {
+            Coordinate c = wayPoint.getCoordinate();
+            Translation2d t = new Translation2d(c.getInchX(), c.getInchY());
+            Rotation2d r = Rotation2d.Companion.fromRadians(wayPoint.getHeading());
+            Pose2d pose2d = new Pose2d(t, r);
+            splinePoints.add(pose2d);
+        }
+
+        GeometricPath splinePath = SplinePath.Companion.composite(splinePoints);
+        for(int i = 0; i < splinePath.getLength(); i++){
+            PathPoint pathPoint = splinePath.getPoint(i);
+            Pose2d pose2d = pathPoint.getPose();
+            Translation2d t = pose2d.getTranslation();
+            Coordinate c = Coordinate.newFromInches(t.x(), t.y());
+
+            WayPoint wayPoint = new WayPoint(c, pose2d.getRotation().getRadians());
+            wayPoint.disableLabel();
+            addWayPoint(wayPoint);
+        }
     }
 
     public Text getPathText(){

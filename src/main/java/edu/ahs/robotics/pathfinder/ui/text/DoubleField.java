@@ -5,6 +5,7 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -22,6 +23,8 @@ public class DoubleField extends TextField {
         this.min = min;
         this.max = max;
         setText(initialValue + "");
+        setMaxSize(50,20);
+        setAlignment(Pos.CENTER);
 
         //add a change listener that updates the double property
         value.addListener((observableValue, oldVal, newVal) -> {

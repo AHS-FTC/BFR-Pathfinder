@@ -212,6 +212,10 @@ public class WayPoint {
         selectionBox.setVisible(selected);
     }
 
+    public void disableLabel(){
+        label.setVisible(false);
+    }
+
     private void renderPosition(){
         double y = coordinate.getPixelY();
         double x = coordinate.getPixelX();

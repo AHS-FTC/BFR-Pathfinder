@@ -80,6 +80,8 @@ public class SideBar {
 
         verticalLayout.getChildren().add(makeEditPowerButton());
 
+        verticalLayout.getChildren().add(makeSplineButton());
+
         verticalLayout.getChildren().add(new Separator(Orientation.HORIZONTAL));
 
         verticalLayout.getChildren().add(makeCloseButton());
@@ -161,6 +163,13 @@ public class SideBar {
         return b;
     }
 
+    private Button makeSplineButton(){
+        Button b = new Button("Spline Interpolate");
+        Path p = PathWindow.getInstance().getActivePath();
+        b.setOnAction(e -> p.interpolate());
+        return b;
+    }
+
     private Button  makeRenamePathButton(){
         Button b = new Button("Rename Active Path");
         Path activePath = PathWindow.getInstance().getActivePath();
@@ -174,5 +183,6 @@ public class SideBar {
         b.getStyleClass().add("warning-button");
         return b;
     }
+
 
 }
