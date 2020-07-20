@@ -1,14 +1,10 @@
 package edu.ahs.robotics.pathfinder.util;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.SocketException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import edu.ahs.robotics.pathfinder.ui.windows.NoConnectionGraphic;
+import javafx.scene.image.Image;
+
+import java.io.*;
+import java.net.*;
 
 /**
  * Util class for interacting with adb and the phones
@@ -16,15 +12,25 @@ import java.util.List;
  * Most of this class graciously stol'd from https://stackoverflow.com/questions/20922600/execute-adb-command-from-java-program
  * thx Sarpe
  */
-public class ADBInterface {
+public class NetworkInterface {
     private static final String[] WIN_RUNTIME = { "cmd.exe", "/C" };
     private static final String[] OS_LINUX_RUNTIME = { "/bin/bash", "-l", "-c" };
 
     private static final String IP = "192.168.49";
     private static final int PORT = 5555;
 
+    private static DataInputStream tcpInputStream;
 
-    private ADBInterface() {} //don't make an instance
+    private static final NoConnectionGraphic NO_CONNECTION_GRAPHIC = new NoConnectionGraphic();
+
+
+    static {
+
+
+    }
+
+
+    private NetworkInterface() {} //don't make an instance
 //
 //    private static <T> T[] concat(T[] first, T[] second) {
 //        T[] result = Arrays.copyOf(first, first.length + second.length);
@@ -64,6 +70,28 @@ public class ADBInterface {
 //            return null;
 //        }
 //    }
+
+    public static void init(){
+        try {
+            ServerSocket serverSocket = new ServerSocket(6969);
+            Socket s = serverSocket.accept();
+            System.out.println("setup");
+            tcpInputStream = new DataInputStream(s.getInputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Image receiveTCP(){
+//        try {
+//            byte[] data = new byte[tcpInputStream.readInt()];
+//            tcpInputStream.readFully(data);
+//
+//            return new Image(new ByteArrayInputStream(data));
+//        } catch (IOException e) {
+           return NO_CONNECTION_GRAPHIC.getImage();
+        //}
+    }
 
     public static void receiveUDP(){ //todo put in a thread
         try(DatagramSocket clientSocket = new DatagramSocket(PORT)) {

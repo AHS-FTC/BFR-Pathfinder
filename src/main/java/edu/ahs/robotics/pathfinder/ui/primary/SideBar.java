@@ -7,10 +7,7 @@ import edu.ahs.robotics.pathfinder.path.Path;
 import edu.ahs.robotics.pathfinder.path.WayPoint;
 import edu.ahs.robotics.pathfinder.ui.text.StandardText;
 import edu.ahs.robotics.pathfinder.ui.text.TitleText;
-import edu.ahs.robotics.pathfinder.ui.windows.NewWayPointWindow;
-import edu.ahs.robotics.pathfinder.ui.windows.PowerWindow;
-import edu.ahs.robotics.pathfinder.ui.windows.SetPositionWindow;
-import edu.ahs.robotics.pathfinder.ui.windows.TextEntryWindow;
+import edu.ahs.robotics.pathfinder.ui.windows.*;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -22,6 +19,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Separator;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -83,6 +81,8 @@ public class SideBar {
         verticalLayout.getChildren().add(makeSplineButton());
 
         verticalLayout.getChildren().add(new Separator(Orientation.HORIZONTAL));
+
+        verticalLayout.getChildren().add(makeRunVisionButton());
 
         verticalLayout.getChildren().add(makeCloseButton());
     }
@@ -174,6 +174,12 @@ public class SideBar {
         Button b = new Button("Rename Active Path");
         Path activePath = PathWindow.getInstance().getActivePath();
         b.setOnAction(e -> new TextEntryWindow("Rename Active Path", "New Name: ", activePath::rename));
+        return b;
+    }
+
+    private Button makeRunVisionButton(){
+        Button b = new Button("Run Vision");
+        b.setOnAction(e -> new VisionWindow("Vision"));
         return b;
     }
 

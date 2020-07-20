@@ -25,7 +25,7 @@ public class Field {
     public Field(double fieldSize) {
 
         Image field = new Image(this.getClass().getResourceAsStream(MODE.fileLoc));
-        fieldView = new javafx.scene.image.ImageView(field);
+        fieldView = new ImageView(field);
         fieldView.setPreserveRatio(true);
         fieldView.setFitWidth(fieldSize);
     }

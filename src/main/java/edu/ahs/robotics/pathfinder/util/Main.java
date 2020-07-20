@@ -5,6 +5,7 @@ import edu.ahs.robotics.pathfinder.path.Coordinate;
 import edu.ahs.robotics.pathfinder.ui.primary.MainApplication;
 import edu.ahs.robotics.pathfinder.ui.primary.PathWindow;
 import edu.ahs.robotics.pathfinder.ui.primary.SideBar;
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
