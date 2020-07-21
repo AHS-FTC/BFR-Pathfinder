@@ -2,7 +2,7 @@ package edu.ahs.robotics.pathfinder.util;
 
 import org.junit.Test;
 
-public class NetworkInterfaceTest {
+public class NetworkTest {
     @Test
     public void testSimpleAddition() {
         //List<String> output = ADBInterface.runProcess(true,"set", "/a", "2+2");
@@ -13,6 +13,6 @@ public class NetworkInterfaceTest {
     @Test
     public void testLaunchADB() {
         //List<String> output = ADBInterface.runProcess(true,"adb");8
-        NetworkInterface.receiveUDP();
+        Network.receiveUDP();
     }
 }

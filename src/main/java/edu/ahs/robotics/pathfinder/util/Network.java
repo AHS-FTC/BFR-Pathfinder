@@ -1,5 +1,6 @@
 package edu.ahs.robotics.pathfinder.util;
 
+import edu.ahs.robotics.pathfinder.ui.windows.ErrorAlert;
 import edu.ahs.robotics.pathfinder.ui.windows.NoConnectionGraphic;
 import javafx.scene.image.Image;
 
@@ -12,7 +13,7 @@ import java.net.*;
  * Most of this class graciously stol'd from https://stackoverflow.com/questions/20922600/execute-adb-command-from-java-program
  * thx Sarpe
  */
-public class NetworkInterface {
+public class Network {
     private static final String[] WIN_RUNTIME = { "cmd.exe", "/C" };
     private static final String[] OS_LINUX_RUNTIME = { "/bin/bash", "-l", "-c" };
 
@@ -22,15 +23,9 @@ public class NetworkInterface {
     private static DataInputStream tcpInputStream;
 
     private static final NoConnectionGraphic NO_CONNECTION_GRAPHIC = new NoConnectionGraphic();
+    private static ServerSocket serverSocket;
 
-
-    static {
-
-
-    }
-
-
-    private NetworkInterface() {} //don't make an instance
+    private Network() {} //don't make an instance
 //
 //    private static <T> T[] concat(T[] first, T[] second) {
 //        T[] result = Arrays.copyOf(first, first.length + second.length);
@@ -71,26 +66,49 @@ public class NetworkInterface {
 //        }
 //    }
 
-    public static void init(){
+    /**
+     * @throws SocketException Thrown if initialization times out.
+     */
+    public static void initTCP() throws SocketException{
         try {
-            ServerSocket serverSocket = new ServerSocket(6969);
-            Socket s = serverSocket.accept();
+            tcpInputStream = null;
+            serverSocket = new ServerSocket(6969);
+            Socket socket = serverSocket.accept();
             System.out.println("setup");
-            tcpInputStream = new DataInputStream(s.getInputStream());
+            tcpInputStream = new DataInputStream(socket.getInputStream());
+        } catch (IOException e) {
+            if(e instanceof SocketException) throw (SocketException)e;
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Closes the socket.
+     * Useful for TCP timeouts
+     */
+    public static void closeTCPSocket(){
+        try {
+            serverSocket.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public static Image receiveTCP(){
-//        try {
-//            byte[] data = new byte[tcpInputStream.readInt()];
-//            tcpInputStream.readFully(data);
-//
-//            return new Image(new ByteArrayInputStream(data));
-//        } catch (IOException e) {
-           return NO_CONNECTION_GRAPHIC.getImage();
-        //}
+    //checks for null so receiveTCP() can be run on a separate thread as initTCP()
+        if(tcpInputStream != null){
+            try {
+                byte[] data = new byte[tcpInputStream.readInt()];
+                tcpInputStream.readFully(data);
+
+                return new Image(new ByteArrayInputStream(data));
+            } catch (IOException e) {
+                return NO_CONNECTION_GRAPHIC.getImage();
+            }
+        } else {
+            return NO_CONNECTION_GRAPHIC.getImage();
+        }
+
     }
 
     public static void receiveUDP(){ //todo put in a thread
@@ -109,7 +127,5 @@ public class NetworkInterface {
         }catch (IOException e){
 
         }
-
     }
-
 }

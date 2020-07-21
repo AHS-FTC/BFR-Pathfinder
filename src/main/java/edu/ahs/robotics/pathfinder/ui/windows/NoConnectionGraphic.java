@@ -4,10 +4,13 @@ import javafx.scene.image.Image;
 
 /**
  * Handles the 'no connection' graphic utilized in VisionWindow, so that you can tell when the thread is running.
+ * @see VisionWindow
+ * @author Alex Appleby, team 16896
  */
 public class NoConnectionGraphic {
     private static final Image[] images = new Image[4];
-    private static final Image notStreamingImage;
+    private static final Image notStreamingImg;
+    private static final Image timeoutImg;
     private static final int maxPhases = 12;
     private long loopStartTime;
 
@@ -15,7 +18,9 @@ public class NoConnectionGraphic {
         for (int i = 0; i < images.length; i++) {
             images[i] = new Image(NoConnectionGraphic.class.getResourceAsStream("/ui/streamgraphics/loading" + i + ".png"));
         }
-        notStreamingImage = new Image(NoConnectionGraphic.class.getResourceAsStream("/ui/streamgraphics/notstreaming.png"));
+        notStreamingImg = new Image(NoConnectionGraphic.class.getResourceAsStream("/ui/streamgraphics/notstreaming.png"));
+        timeoutImg = new Image(NoConnectionGraphic.class.getResourceAsStream("/ui/streamgraphics/timeout.png"));
+
     }
 
     public NoConnectionGraphic() {
@@ -23,11 +28,20 @@ public class NoConnectionGraphic {
     }
 
     /**
-     * Returns a single image, outside of the context of animation
+     * For when there's no connecting going on
      */
-    public static Image getNotStreamingImage(){
-        return notStreamingImage;
+    public static Image getNotStreamingImg(){
+        return notStreamingImg;
     }
+
+    /**
+     * For after initTimeout
+     */
+    public static Image getTimeoutImg(){
+        return timeoutImg;
+    }
+
+
 
     public Image getImage(){
         int phase = (int)((System.currentTimeMillis() - loopStartTime)/100); //dangerous cast, must be int for switch
