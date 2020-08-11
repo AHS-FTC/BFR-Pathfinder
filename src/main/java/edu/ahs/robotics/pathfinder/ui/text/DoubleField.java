@@ -11,11 +11,13 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.util.converter.DoubleStringConverter;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
 public class DoubleField extends TextField {
     private final DoubleProperty value;
     private final double min, max;
     private static final DoubleStringConverter converter = new DoubleStringConverter();
-
 
     public DoubleField(double initialValue, double min, double max){
         value = new SimpleDoubleProperty(initialValue);
@@ -54,14 +56,16 @@ public class DoubleField extends TextField {
 
         textProperty().addListener((observableValue, oldString, newString) -> {
             if (newString == null || "".equals(newString)) {
-                value.setValue(0.0);
+                value.setValue(0.5);
                 return;
             }
 
-            double doubleValue = 0;
+            double doubleValue;
             try {
                  doubleValue = converter.fromString(newString);
-            } finally { }
+            } catch (NumberFormatException e){
+                return;
+            }
 
             if(doubleValue > max){
                 value.set(max);
@@ -77,7 +81,6 @@ public class DoubleField extends TextField {
             //update();
 
         });
-
     }
 
     public DoubleProperty getDoubleProperty(){
@@ -85,6 +88,6 @@ public class DoubleField extends TextField {
     }
 
     private void update(){
-        setText(value.get() + "");
+        setText(String.format("%.2f", value.doubleValue()));
     }
 }

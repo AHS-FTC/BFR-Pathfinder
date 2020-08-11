@@ -43,7 +43,7 @@ public class WayPoint {
     private int count;
     private static final double X_OFFSET = 4.0;
     private Color color = Color.WHITE;
-    private Slider slider = new Slider(0, 1, 0);
+    private final Slider slider = new Slider(0, 1, .5);
 
     private static ArrayList<WayPoint> selectedWayPoints = new ArrayList<>();
 
@@ -160,6 +160,14 @@ public class WayPoint {
     /*protected*/ void setCount (int count){
         this.count = count;
         label.setText(String.valueOf(count));
+    }
+
+    /**
+     * Returns the readable position of this waypoint within it's path, where the first point is 1.
+     * You should probably only use this for graphical purposes.
+     */
+    public int getCount(){
+        return count;
     }
 
     public Node getGraphic(){

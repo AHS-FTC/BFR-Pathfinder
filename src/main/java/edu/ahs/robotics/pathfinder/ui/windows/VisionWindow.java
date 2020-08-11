@@ -34,7 +34,7 @@ public class VisionWindow extends Window{
 
         createScene(pane);
 
-        stage.setOnCloseRequest(e -> thread.kill());
+        stage.setOnCloseRequest(e -> { if(thread != null) thread.kill(); });
     }
 
     private Button createStartButton(){
