@@ -10,10 +10,22 @@ import javafx.application.Application;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+/**
+ *                                                ________ ____  ____  _____
+ *                                               <  / ___/( __ )/ __ \/ ___/
+ *                                               / / __ \/ __  / /_/ / __ \
+ *                                              / / /_/ / /_/ /\__, / /_/ /
+ *                                             /_/\____/\____//____/\____/
+ *
+ *     ____  __    ___   ________ __    __________  ____  _________________   ____  ____  ____  ____  _____________________
+ *    / __ )/ /   /   | / ____/ //_/   / ____/ __ \/ __ \/ ____/ ___/_  __/  / __ \/ __ \/ __ )/ __ \/_  __/  _/ ____/ ___/
+ *   / __  / /   / /| |/ /   / ,<     / /_  / / / / /_/ / __/  \__ \ / /    / /_/ / / / / __  / / / / / /  / // /    \__ \
+ *  / /_/ / /___/ ___ / /___/ /| |   / __/ / /_/ / _, _/ /___ ___/ // /    / _, _/ /_/ / /_/ / /_/ / / / _/ // /___ ___/ /
+ * /_____/_____/_/  |_\____/_/ |_|  /_/    \____/_/ |_/_____//____//_/    /_/ |_|\____/_____/\____/ /_/ /___/\____//____/
+ *
+ *                                                 FEARTHEBUCK
+ */
 public class Main extends Application {
-
-    private SideBar sidebar;
-    private Environment environment;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -23,9 +35,7 @@ public class Main extends Application {
 
         MainApplication.init(windowSize);
 
-//        environment = new Environment(windowSize);
-//        PathWindow.init(environment);
-//        SideBar.init(windowSize, environment);
+
     }
 
 
