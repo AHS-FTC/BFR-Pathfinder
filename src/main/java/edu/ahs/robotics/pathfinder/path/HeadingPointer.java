@@ -9,7 +9,7 @@ import javafx.scene.shape.Polygon;
 /**
  * A graphical triangle that points in the direction of a WayPoint
  */
-public class HeadingPointer {
+public class HeadingPointer{
 
     private Double heading; //nonprimitive for ambiguous values
     private MathCircle boundingCircle;
@@ -22,7 +22,7 @@ public class HeadingPointer {
         super();
         this.coordinate = coordinate;
         boundingCircle = new MathCircle(coordinate.getPixelX(), coordinate.getPixelY(), radius);
-        circleGraphic = new Circle(coordinate.getPixelX(), coordinate.getPixelY(), radius);
+        circleGraphic = new Circle(coordinate.getPixelX(), coordinate.getPixelY(), radius * .7); //make it a bit smaller than the pointer
         group.getChildren().addAll(arrow, circleGraphic);
     }
 

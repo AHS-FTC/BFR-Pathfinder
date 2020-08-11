@@ -31,22 +31,13 @@ public class Environment {
     private static Environment instance;
 
     private Environment(double windowSize) {
-        field = new Field(windowSize);
+        field = new Field(windowSize, robot);
 
         layout.getChildren().add(field.getImageView());
         layout.getChildren().add(robot.getImageView());
 
         layout.prefHeight(windowSize);
         layout.prefWidth(windowSize);
-
-//        window.setScene(scene);
-//        window.setTitle("Black Forest Robotics Pathfinder");
-//        window.onCloseRequestProperty().setValue(e -> Platform.exit());
-
-        layout.addEventFilter(MouseEvent.MOUSE_CLICKED, this::onMouseClick);
-
-        //window.show();
-        //lockWindow();
     }
 
     public static void init(double windowSize){
@@ -61,27 +52,6 @@ public class Environment {
 
     public Node getLayout(){
         return layout;
-    }
-
-    private void onMouseClick(MouseEvent e){
-        if(e.getButton() == MouseButton.PRIMARY){
-            //presumably a Polygon or Circle and thus a waypoint, but there may be a better way to do this
-            if (!(e.getTarget() instanceof Shape)) { //if this is true, WayPoint handles the MouseEvent
-                WayPoint.deselectAll();
-                if (KeyManager.isPressed(KeyCode.CONTROL)) {
-
-                        Coordinate c = Coordinate.newFromPixels(e.getX(), e.getY());
-
-                        WayPoint w = new WayPoint(c);
-                        PathWindow.getInstance().getActivePath().addWayPoint(w);
-
-                    } else {
-                        robot.setPosition(Coordinate.newFromPixels(e.getX(), e.getY()));
-                    }
-            }
-        } else if (e.getButton() == MouseButton.SECONDARY){
-            robot.pointTowards(Coordinate.newFromPixels(e.getX(), e.getY()));
-        }
     }
 
     public Robot getRobot(){

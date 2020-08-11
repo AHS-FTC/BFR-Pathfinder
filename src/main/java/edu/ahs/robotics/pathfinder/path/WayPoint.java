@@ -1,12 +1,12 @@
 package edu.ahs.robotics.pathfinder.path;
 
+import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Slider;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -22,7 +22,7 @@ import java.util.Objects;
  * A null heading prevents bugs by handing over a null pointer instead of an arbitrary value.
  */
 public class WayPoint {
-    private static final double GRAPHIC_RADIUS = 6;
+    private static final double GRAPHIC_RADIUS = 8;
 
     private Coordinate coordinate;
 
@@ -36,7 +36,6 @@ public class WayPoint {
 
     private Group group;
     private Text label;
-    private Circle circle;
     private Rectangle selectionBox;
     private HeadingPointer headingPointer;
 
@@ -64,9 +63,6 @@ public class WayPoint {
     public WayPoint(Coordinate coordinate){
         this.coordinate = coordinate;
 
-        circle = new Circle(GRAPHIC_RADIUS);
-        circle.setFill(color);
-
         label = new Text(String.valueOf(count));
 
 
@@ -75,12 +71,13 @@ public class WayPoint {
         group = new Group();
 
         group.addEventFilter(MouseEvent.MOUSE_CLICKED, this::onMouseClicked);
+        group.addEventFilter(MouseEvent.MOUSE_DRAGGED, this::onMouseDragged);
 
         headingPointer = new HeadingPointer(GRAPHIC_RADIUS, coordinate);
 
         makeSelectionBox();
 
-        renderPosition();
+        update();
 
         group.getChildren().addAll(headingPointer.getGraphics(), label, selectionBox);
     }
@@ -146,12 +143,11 @@ public class WayPoint {
         coordinate.setInchX(x + xIns);
         coordinate.setInchY(y + yIns);
 
-        renderPosition();
+        update();
     }
 
     /*protected*/ void setColor(Color color){ //only use in path package
         this.color = color;
-        circle.setFill(color);
         headingPointer.setFill(color);
         label.setFill(color);
         selectionBox.setStroke(color);
@@ -210,6 +206,16 @@ public class WayPoint {
         }
     }
 
+    private void onMouseDragged(MouseEvent e){
+        Point2D clickPoint = new Point2D(e.getSceneX(), e.getSceneY());
+
+        //translate the click from scene coordinates to field coordinates
+        Point2D translatedPoint = group.getParent().sceneToLocal(clickPoint);
+        coordinate.setPixelX(translatedPoint.getX());
+        coordinate.setPixelY(translatedPoint.getY());
+        update();
+    }
+
     public void setSelected(boolean selected){
         this.selected = selected;
         if(selected){
@@ -224,15 +230,15 @@ public class WayPoint {
         label.setVisible(false);
     }
 
-    private void renderPosition(){
+    /**
+     * Updates graphical components after a positional change
+     */
+    private void update(){
         double y = coordinate.getPixelY();
         double x = coordinate.getPixelX();
 
         label.setX(x + X_OFFSET);
         label.setY(y);
-
-        circle.setCenterX(x);
-        circle.setCenterY(y);
 
         setBoxCorners();
 
