@@ -114,7 +114,7 @@ public class Path {
                 }
 
                 wayPoint.setHeading(angle);
-                lastWayPoint.reFollow(wayPoint, angle);
+                lastWayPoint.reFollow(angle);
 
             } else { //hold
                 if(lastWayPoint.getHeading() != null) {

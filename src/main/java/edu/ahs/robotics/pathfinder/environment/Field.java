@@ -42,9 +42,10 @@ public class Field {
 
     private void onMouseClick(MouseEvent e){
         if(e.getButton() == MouseButton.PRIMARY){
-            WayPoint.deselectAll();
-            if (KeyManager.isPressed(KeyCode.CONTROL)) {
-
+            if(!e.isShiftDown()){
+                WayPoint.deselectAll();
+            }
+            if (e.isControlDown()) {
                 Coordinate c = Coordinate.newFromPixels(e.getX(), e.getY());
 
                 WayPoint w = new WayPoint(c);
