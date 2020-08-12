@@ -80,7 +80,6 @@ public class HeadingPointer{
     }
 
     public void setHeading(double heading){
-
         if(circleGraphic.isVisible()){
             circleGraphic.setVisible(false);
         }

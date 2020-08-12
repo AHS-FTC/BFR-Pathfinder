@@ -1,11 +1,14 @@
 package edu.ahs.robotics.pathfinder.path;
 
+import edu.ahs.robotics.pathfinder.ui.text.StandardText;
+import edu.ahs.robotics.pathfinder.util.Util;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Slider;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
@@ -35,7 +38,8 @@ public class WayPoint {
     private Line prevLine, nextLine;
 
     private Group group;
-    private Text label;
+    private Text numberLabel, xLabel, yLabel, headingLabel;
+    private VBox labelBox = new VBox(2); //contains x,y,h labels
     private Rectangle selectionBox;
     private HeadingPointer headingPointer;
 
@@ -53,7 +57,6 @@ public class WayPoint {
         this(coordinate);
         this.heading = heading;
         ambiguous = false;
-        headingPointer.setHeading(heading);
     }
 
     /**
@@ -63,10 +66,15 @@ public class WayPoint {
     public WayPoint(Coordinate coordinate){
         this.coordinate = coordinate;
 
-        label = new Text(String.valueOf(count));
+        numberLabel = new Text(String.valueOf(count));
 
+        xLabel = new Text();
+        yLabel = new Text();
+        headingLabel = new Text();
+        headingLabel.setVisible(false);
 
-        label.setFill(color);
+        labelBox.getChildren().addAll(xLabel,yLabel,headingLabel);
+        labelBox.setVisible(false);
 
         group = new Group();
 
@@ -79,7 +87,7 @@ public class WayPoint {
 
         update();
 
-        group.getChildren().addAll(headingPointer.getGraphics(), label, selectionBox);
+        group.getChildren().addAll(headingPointer.getGraphics(), numberLabel, selectionBox, labelBox);
     }
 
     /**
@@ -88,6 +96,7 @@ public class WayPoint {
     public void setHeading(double heading){ // setter enforces heading primitivism
         this.heading = heading;
         headingPointer.setHeading(heading);
+        update();
     }
 
     public void setPrevLine(Line previous){
@@ -101,12 +110,11 @@ public class WayPoint {
     /**
      * for ambiguous points, reassess pathfollowing heading after a point ahead of this one is added
      */
-    public void reFollow(WayPoint wayPoint, double newIdealHeading){
+    public void reFollow(double newIdealHeading){
         if(isAmbiguous() && heading != null ){
-            //double newIdealHeading = coordinate.angleTo(wayPoint.getCoordinate()); //todo fix pos/negative bug on this method with this implementation
 
-            //average of old and new heading is new heading
-            setHeading((heading + newIdealHeading)/2.0);
+        //average of old and new heading is new heading
+        setHeading((heading + newIdealHeading)/2.0);
         }
     }
 
@@ -149,13 +157,16 @@ public class WayPoint {
     /*protected*/ void setColor(Color color){ //only use in path package
         this.color = color;
         headingPointer.setFill(color);
-        label.setFill(color);
+        numberLabel.setFill(color);
+        xLabel.setFill(color);
+        yLabel.setFill(color);
+        headingLabel.setFill(color);
         selectionBox.setStroke(color);
     }
 
     /*protected*/ void setCount (int count){
         this.count = count;
-        label.setText(String.valueOf(count));
+        numberLabel.setText(String.valueOf(count));
     }
 
     /**
@@ -177,6 +188,7 @@ public class WayPoint {
     public static void deselectAll(){
         for (WayPoint wp : selectedWayPoints) {
             wp.selectionBox.setVisible(false);
+            wp.labelBox.setVisible(false);
             wp.selected = false;
         }
         selectedWayPoints.clear();
@@ -224,10 +236,11 @@ public class WayPoint {
             selectedWayPoints.remove(this);
         }
         selectionBox.setVisible(selected);
+        labelBox.setVisible(selected);
     }
 
     public void disableLabel(){
-        label.setVisible(false);
+        numberLabel.setVisible(false);
     }
 
     /**
@@ -237,8 +250,11 @@ public class WayPoint {
         double y = coordinate.getPixelY();
         double x = coordinate.getPixelX();
 
-        label.setX(x + X_OFFSET);
-        label.setY(y);
+        numberLabel.setX(x + X_OFFSET);
+        numberLabel.setY(y);
+
+        labelBox.setLayoutX(x + 10);
+        labelBox.setLayoutY(y + 10);
 
         setBoxCorners();
 
@@ -253,6 +269,18 @@ public class WayPoint {
         }
 
         headingPointer.setPosition(coordinate);
+
+        //update position labels
+        xLabel.setText(Util.formatDouble(coordinate.getInchX()));
+        yLabel.setText(Util.formatDouble(coordinate.getInchY()));
+
+        if(heading != null){
+            headingPointer.setHeading(heading);
+            headingLabel.setText(Util.formatHeading(heading));
+            if(!headingLabel.isVisible()){
+                headingLabel.setVisible(true);
+            }
+        }
     }
 
     @Override

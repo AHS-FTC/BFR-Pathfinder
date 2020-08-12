@@ -7,4 +7,7 @@ public class StandardText extends Text {
         super(text);
         getStyleClass().add("standard-text");
     }
+    public StandardText() {
+        this("");
+    }
 }
